@@ -17,7 +17,7 @@ mongoose
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  Title: String,
+  Title: { type: String, required: true },
   Description: String,
   Category: String,
   ImageURL: String,
