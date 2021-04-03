@@ -6,7 +6,8 @@
   "scripts": {
     "start": "nodemon server/server.js",
     "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server & npm start"
+    "dev": "NODE_ENV=development webpack-dev-server & npm start",
+    "dev-windows": "cross-env process.env.NODE_ENV=development concurrently \"webpack-dev-server --open\" \" npm start\""
   },
   "repository": {
     "type": "git",
