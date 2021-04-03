@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 
 const LogoName = (props) => (
   <div id="logoName">
-    <img src="#" alt="sickBay Logo" />
+    <img src="../assets/sickBay.jpg" alt="sickBay Logo" />
     <h3>sickBay</h3>
   </div>
 );

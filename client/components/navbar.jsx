@@ -1,23 +1,15 @@
 import React, { useState } from 'react';
 import LogoName from './navbar/logoName.jsx';
-// import BigSearch from './navbar/bigSearch';
+import BigSearch from './navbar/bigSearch.jsx';
 // import Categories from './navbar/categories';
 // import Login from './navbar/login';
 // import Signup from './navbar/signup';
 
-<<<<<<< HEAD
-const Navbar = (props) => {
-  
-  return (
-    <Categories></Categories>
-  )
-}
-=======
 const Navbar = (props) => (
   <header id="navbar">
     <div id="top">
       <LogoName />
-      <section id="bigSearchPlaceholder">Search bar </section>
+      <BigSearch />
       <section id="loginPlaceholder">Login Button</section>
       <section id="signupPlaceholder">signUp Button</section>
     </div>
@@ -27,6 +19,5 @@ const Navbar = (props) => (
 
   </header>
 );
->>>>>>> main
 
 export default Navbar;
