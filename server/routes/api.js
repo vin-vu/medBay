@@ -4,6 +4,7 @@ const productController = require('../controllers/productController');
 
 const router = express.Router();
 
+router.get('itemSearch', productController.itemSearch())
 
 
 
