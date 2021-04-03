@@ -1,8 +1,13 @@
 const express = require('express');
+
 const app = express();
-const models = require('./models/sickBayModels');
+const api = require('./routes/api');
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/api', api);
+
 // GET ALL
 app.get('/api/allProducts', (req, res) => {
   models.Product.find({})
