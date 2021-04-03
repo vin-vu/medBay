@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Navbar from './components/navbar.jsx';
-// import MainBody from './components/mainBody';
+import MainBody from './components/mainBody.jsx';
 
 const App = (props) => {
   const [myState, setMyState] = useState({
@@ -19,7 +19,7 @@ const App = (props) => {
   return (
     <div id="bigBoyBody">
       <Navbar />
-      <section id="bodyPlaceholder">{myState.otherMessage}</section>
+      <MainBody />
     </div>
   );
 };
