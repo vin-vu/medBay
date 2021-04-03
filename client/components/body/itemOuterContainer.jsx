@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import * as IndividualDisplay from './body/IndividualDisplay';
+import IndividualDisplay from './individualDisplay.jsx';
 
 // '/api/allProducts'
 const ItemOuterContainer = (props) => {
@@ -10,12 +10,16 @@ const ItemOuterContainer = (props) => {
 
   useEffect(() => {
     fetch('http://localhost:3000/api/allProducts')
-    .then(dbListings => setListingsState({...listingsState, listingsFromDB = dbListings}))
+      .then((dbListings) => {
+        setListingsState({ ...listingsState, listingsFromDB: dbListings });
+      });
   });
 
+  // In the end I'll be feeding in an array of preconstructed IndividualDisplay
+  // components feeding in the props from state
   return (
     <div id="itemOuterCountainer">
-      {listingsState.listingsFromDB}
+      <IndividualDisplay />
     </div>
   );
 };
