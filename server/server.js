@@ -18,7 +18,7 @@ app.get('/api/allProducts', (req, res) => {
 });
 
 // POST
-app.post('/api/allProducts', (req, res) => {
+app.post('/api/addProduct', (req, res) => {
   const newProduct = req.body;
   models.Product.create(newProduct)
     .then((data) => {
