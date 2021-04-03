@@ -5,10 +5,19 @@ import * as Login from './navbar/login';
 import * as LogoName from './navbar/logoName';
 import * as Signup from './navbar/signup';
 
-const Navbar = (props) => {
+const Navbar = (props) => (
+  <header id="navbar">
+    <div id="top">
+      <section id="logoNamePlaceholder">Picture of sickbay</section>
+      <section id="bigSearchPlaceholder">Search bar </section>
+      <section id="loginPlaceholder">Login</section>
+      <section id="signupPlaceholder" style={{ visibility: 'hidden' }}>signUp Page</section>
+    </div>
+    <div id="bottom">
+      <section id="categoryPlaceholder">categories</section>
+    </div>
 
-  return ()
-}
-
+  </header>
+);
 
 export default Navbar;
