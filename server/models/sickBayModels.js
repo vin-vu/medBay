@@ -17,8 +17,11 @@ mongoose
 const { Schema } = mongoose;
 
 const productSchema = new Schema({
-  status: { type: String, default: 'ok' },
-  message: String,
+  Title: { type: String, required: true },
+  Description: String,
+  Category: String,
+  ImageURL: String,
+  Price: Number,
 });
 
 const Product = mongoose.model('product', productSchema);
