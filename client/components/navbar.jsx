@@ -6,8 +6,10 @@ import * as LogoName from './navbar/logoName';
 import * as Signup from './navbar/signup';
 
 const Navbar = (props) => {
-
-  return ()
+  
+  return (
+    <Categories></Categories>
+  )
 }
 
 
