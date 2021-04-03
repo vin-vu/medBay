@@ -1,10 +1,14 @@
 import React, { useState } from 'react';
-import Navbar from './components/navbar'
+import Navbar from './components/navbar.jsx';
+// import MainBody from './components/mainBody';
 
 const App = (props) => {
 
   return (
-    <Navbar></Navbar>
+    <div id="bigBoyBody">
+      <Navbar />
+      <section id="bodyPlaceholder"></section>
+    </div>
   );
 };
 
