@@ -10,8 +10,8 @@ const Navbar = (props) => (
     <div id="top">
       <section id="logoNamePlaceholder">Picture of sickbay</section>
       <section id="bigSearchPlaceholder">Search bar </section>
-      <section id="loginPlaceholder">Login</section>
-      <section id="signupPlaceholder" style={{ visibility: 'hidden' }}>signUp Page</section>
+      <section id="loginPlaceholder">Login Button</section>
+      <section id="signupPlaceholder">signUp Button</section>
     </div>
     <div id="bottom">
       <section id="categoryPlaceholder">categories</section>
