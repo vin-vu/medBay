@@ -1,7 +1,8 @@
 const express = require('express');
 
 const app = express();
-const api = require('./routes/api');
+const api = require('./routes/api.js');
+const models = require('./models/sickBayModels.js');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
