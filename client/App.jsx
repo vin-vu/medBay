@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import Navbar from './components/navbar.jsx';
+// import MainBody from './components/mainBody';
 
 const App = (props) => {
   const [myState, setMyState] = useState({
@@ -16,7 +18,7 @@ const App = (props) => {
 
   return (
     <div id="bigBoyBody">
-      <section id="navBarPlaceholder">{myState.message}</section>
+      <Navbar />
       <section id="bodyPlaceholder">{myState.otherMessage}</section>
     </div>
   );
