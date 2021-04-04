@@ -1,6 +1,4 @@
-import React, { useState } from 'react';
-// Discussions show we may grab logo from fetch request
-// import logo from '../../assets/sickBay.jpg';
+import React from 'react';
 
 const LogoName = (props) => (
   <div id="logoName">
