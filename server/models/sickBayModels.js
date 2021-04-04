@@ -22,6 +22,7 @@ const productSchema = new Schema({
   Category: String,
   ImageURL: String,
   Price: Number,
+  Quantity: Number,
 });
 
 const Product = mongoose.model('product', productSchema);
