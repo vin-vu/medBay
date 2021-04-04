@@ -1,8 +1,11 @@
 const express = require('express');
-
 const app = express();
+// require in cors
+const cors = require('cors');
 const api = require('./routes/api');
 
+// Since fetch was unable with an endpoint, used cors to fetch with an entire url
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 

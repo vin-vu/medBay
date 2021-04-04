@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 
 const Categories = (props) => {
-
-  return ();
+  return (
+    <h1>hello</h1>
+  );
 }
 
 export default Categories;
