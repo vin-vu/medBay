@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import Navbar from './components/navbar.jsx';
-import MainBody from './components/mainBody.jsx';
+import Navbar from './components/navbar';
+import MainBody from './components/mainBody';
 
 const App = (props) => (
   <div id="bigBoyBody">

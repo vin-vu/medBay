@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import LogoName from './navbar/logoName.jsx';
-import BigSearch from './navbar/bigSearch.jsx';
+import LogoName from './navbar/logoName';
+import BigSearch from './navbar/bigSearch';
 // import Categories from './navbar/categories';
 // import Login from './navbar/login';
 // import Signup from './navbar/signup';

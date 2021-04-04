@@ -44,4 +44,8 @@ module.exports = {
     host: '0.0.0.0',
     hot: true,
   },
+  resolve: {
+    // Enable importing JS / JSX files without specifying their extension
+    extensions: ['.js', '.jsx'],
+  },
 };
