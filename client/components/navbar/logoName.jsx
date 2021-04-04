@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const LogoName = (props) => {
-
-  return ();
-}
+const LogoName = (props) => (
+  <div id="logoName">
+    <img src="../assets/sickBay.jpg" alt="sickBay Logo" />
+    <h3>sickBay</h3>
+  </div>
+);
 
 export default LogoName;
