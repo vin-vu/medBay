@@ -5,5 +5,5 @@ const Categories = (props) => {
     <h1>hello</h1>
   );
 }
-
+"hello"
 export default Categories;
