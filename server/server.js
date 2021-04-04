@@ -17,6 +17,16 @@ app.get('/api/allProducts', (req, res) => {
     });
 });
 
+app.get('/api/PPE', (req, res) => {
+  models.Product.find({})
+    .then((data) => {
+      res.status(200).send(data);
+    })
+    .catch((err) => {
+      res.status(400).send(err);
+    });
+});
+
 // GET FIRST 25 IMAGES
 app.get('/api/topProducts', (req, res) => {
   models.Product.find({}).limit(25)
