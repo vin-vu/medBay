@@ -13,9 +13,15 @@ router.get('/topProducts', productController.getTopProducts, (req, res) => {
   res.status(200).json(res.locals);
 });
 
-// ADD A NEW PRODUCT
+// ADD NEW PRODUCTS
 router.post('/product', productController.addProducts, (req, res) => {
   res.status(200).json(res.locals);
+});
+
+// ============ !!!DANGER DANGER DANGER!!! ============
+// DELETE ALL PRODUCS FROM DATABASE
+router.delete('/product', productController.deleteProducts, (req, res) => {
+  res.status(200).json('database cleaned!');
 });
 
 module.exports = router;
