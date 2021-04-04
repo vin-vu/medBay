@@ -22,7 +22,8 @@ router.post('/product', productController.addProducts, (req, res) => {
 // GET ALL ITEMS THAT PERTAIN TO THE SEARCHED NAME OF ITEM
 router.post('/productSearch', productController.getSearchedProducts, (req, res) => {
   res.status(200).json(res.locals);
-  
+});
+
 // ============ !!!DANGER DANGER DANGER!!! ============
 // DELETE ALL PRODUCS FROM DATABASE
 router.delete('/product', productController.deleteProducts, (req, res) => {
