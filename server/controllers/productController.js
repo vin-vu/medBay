@@ -15,6 +15,19 @@ productController.getProducts = (req, res, next) => {
     }));
 };
 
+// GET CATEGORY LIST
+productController.getCategoryList = (req, res, next) => {
+  models.Product.distinct('Category')
+    .then((data) => {
+      res.locals = data;
+      next();
+    })
+    .catch((err) => next({
+      log: err,
+      message: { err: 'productController.getCategoryList failed.' },
+    }));
+};
+
 // GET TOP 8 PRODUCTS
 productController.getTopProducts = (req, res, next) => {
   models.Product.find({}).limit(8)
