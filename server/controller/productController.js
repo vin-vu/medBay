@@ -6,11 +6,13 @@ const productController = {};
 
 productController.itemSearch = (req, res, next) => {
   const itemName = req.body;
-  models.Product.find({ Title: itemName }, 
-    { limit: 20 }
+  models.Product.find({ Title: itemName }, { limit: 20 },
     (err, products) => {
-      if (err) return next()
-  })
+      if (err) {
+        next(err);
+      }
+      res.locals.products
+    })
 }
 
 //your code....
