@@ -46,11 +46,14 @@ productController.addProducts = (req, res, next) => {
 // GET PRODUCTS THAT PERTAINS TO THE WHAT THE USER SEARCHED
 productController.getSearchedProducts = (req, res, next) => {
   const { productName } = req.body;
-  models.Product.find({ Title: productName },
+  models.Product.find({ Title: { $regex : /.*mini.*/i } },
     'Title Description Price ImageURL Category',
     { limit: 20 },
     (err, product) => {
-      if (err) return next({ log: err, message: { err: 'productController.getSearchedProducts failed.' } });
+      if (err) {
+        console.log(err);
+        return next({ log: err, message: { err: 'productController.getSearchedProducts failed.' } });
+      }
       product.push('hello')
       res.locals = product;
       next();
