@@ -46,9 +46,9 @@ productController.addProducts = (req, res, next) => {
 // GET PRODUCTS THAT PERTAINS TO THE WHAT THE USER SEARCHED
 productController.getSearchedProducts = (req, res, next) => {
   const { productName } = req.body;
-  const regexString = '^' + productName;
-  console.log(regexString);
-  models.Product.find({ Title: { $regex : regexString, $options: 'i' } },
+  // console.log(productName);
+  // models.Product.find({ Title: { $regex : regexString, $options: 'i' } },
+    models.Product.find({ Title: { $regex: productName, $options: 'i' } },
     'Title Description Price ImageURL Category',
     { limit: 20 },
     (err, product) => {
