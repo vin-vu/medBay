@@ -66,7 +66,7 @@ const ItemOuterContainer = (props) => {
       alignItems="flex-end"
       id="itemOuterCountainer"
     >
-      {listingsState.listingsToRender}
+      {props.items}
     </Grid>
   );
 };
