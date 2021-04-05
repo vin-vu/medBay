@@ -15,6 +15,19 @@ productController.getProducts = (req, res, next) => {
     }));
 };
 
+// GET TOP 8 PRODUCTS
+productController.getTopProducts = (req, res, next) => {
+  models.Product.find({}).limit(8)
+    .then((data) => {
+      res.locals = data;
+      next();
+    })
+    .catch((err) => next({
+      log: err,
+      message: { err: 'productController.getTopProducts failed.' },
+    }));
+};
+
 // GET CATEGORY LIST
 productController.getCategoryList = (req, res, next) => {
   models.Product.distinct('Category')
@@ -28,16 +41,17 @@ productController.getCategoryList = (req, res, next) => {
     }));
 };
 
-// GET TOP 8 PRODUCTS
-productController.getTopProducts = (req, res, next) => {
-  models.Product.find({}).limit(8)
+// GET SPECIFIC CATEGORY PRODUCTS
+productController.categoryProducts = (req, res, next) => {
+  const { query } = req;
+  models.Product.find(query)
     .then((data) => {
       res.locals = data;
       next();
     })
     .catch((err) => next({
       log: err,
-      message: { err: 'productController.getProducts failed.' },
+      message: { err: 'productController.categoryProducts failed.' },
     }));
 };
 
@@ -55,7 +69,6 @@ productController.addProducts = (req, res, next) => {
     }));
 };
 
-
 // GET PRODUCTS THAT PERTAINS TO THE WHAT THE USER SEARCHED
 productController.getSearchedProducts = (req, res, next) => {
   const { productName } = req.body;
@@ -66,7 +79,7 @@ productController.getSearchedProducts = (req, res, next) => {
       if (err) return next({ log: err, message: { err: 'productController.getSearchedProducts failed.' } });
       res.locals = products;
       next();
-    })
+    });
 };
 
 // ============ !!!DANGER DANGER DANGER!!! ============
