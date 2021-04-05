@@ -22,7 +22,7 @@ const IndividualDisplay = (props) => (
     padding="2.5% 2.5%"
   >
     <Box flexGrow="1">
-      <img src={props.image} alt="Image not Found" width="100%"/>
+      <img src={props.image} alt="Image Not Found" width="100%"/>
     </Box>
     <Box component="span" flexGrow="1" padding="1% 0px" color="primary.main">
       Product:
