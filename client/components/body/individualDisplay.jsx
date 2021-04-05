@@ -1,10 +1,19 @@
 import React, { useState } from 'react';
 
-const IndividualDisplay = (props) => (
+export default function IndividualDisplay(props) { 
   // <div id="placeholder for individual listings rendering" />
-  <div>
-    <div>{props.product.Title}</div>
-  </div>
-)
+  function createItemCard(product) {
+    // const { product } = item;
+    console.log(product);
+    // const description = item.Description
+    // return description;
+  }
 
-export default IndividualDisplay;
+  return (
+    <div>
+      <div>{createItemCard(props.product)}</div>
+    </div>
+  )
+}
+
+
