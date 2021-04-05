@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import IndividualDisplay from './individualDisplay.jsx';
 
 // '/api/allProducts'
@@ -50,7 +50,7 @@ const ItemOuterContainer = (props) => {
     <Grid
       container
       display="flex"
-      flexWrap="wrap"
+      flexwrap="wrap"
       direction="row"
       justify="flex-start"
       alignItems="flex-end"
