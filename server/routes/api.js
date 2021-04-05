@@ -25,6 +25,11 @@ router.post('/signup', userController.addUser, (req, res) => {
   res.status(200).json('Your account has been successfully added.')
 });
 
+// VERIFY USER INFORMATION FROM DB
+router.post('/verifyUser', userController.verifyUser, (req, res) => {
+  res.status(200).json(res.locals);
+})
+
 // ADD NEW PRODUCTS
 router.post('/product', productController.addProducts, (req, res) => {
   res.status(200).json(res.locals);
