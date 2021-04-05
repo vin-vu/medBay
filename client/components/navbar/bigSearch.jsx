@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 
-export default function BigSearch() {
-  const [itemList, setItemList] = useState([]);
+export default function BigSearch(props) {
+  // const [itemList, setItemList] = useState([]); // [item1, item2 ...]
   const [searchInput, setSearchInput] = useState('');
   // console.log(searchInput)
 
@@ -18,15 +18,31 @@ export default function BigSearch() {
 
   /* Fetch from server */
   // update function to handle post request with the keyword as a parameter
-  function fetchItem() { 
-    fetch('http://localhost:3000/api/allProducts')
+  function fetchItem() {
+    fetch('/api/allProducts')
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
-        return setItemList(data);
+        return props.setState(data);
       })
-      .catch((err) => console.log('There has been a problem with your fetch operation: ', err));
+      .catch((err) => console.log('There has been a problem with fetching items ', err));
   }
+
+  /*
+  Better fetch function to send data to server
+  server can get the data by req.query
+  */
+  // function fetchItem() {
+  //   fetch(`/api/allProducts?${searchInput}&${asdfaasdf}&${asasdfafsdf}`)
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       console.log(data);
+  //       return props.setState(data);
+  //     })
+  //     .catch((err) => console.log('There has been a problem with fetching items ', err));
+  // }
+
+
 
   /* Update state on every keystroke */
   function handleChange(event) {
