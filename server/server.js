@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 
 // global error handler
 app.use((err, req, res, next) => {
-  const errorObj = Object.assign(err, defaultErr);
+  const errorObj = Object.assign(defaultErr, err);
   res.status(errorObj.status).json(errorObj.message);
 });
 
