@@ -9,7 +9,7 @@ export default function BigSearch(props) {
 
   // const fetchData = {
   //   method: 'POST',
-  //   body: JSON.stringify(searchInput),
+  //   body: JSON.stringify({ productName: searchInput }),
   //   headers: { 'Content-Type': 'application/json' },
   // };
 
@@ -31,11 +31,11 @@ export default function BigSearch(props) {
   }
   /* Fetch on pressing enter key */
   function getItemByEnterKey(event) {
-    if (event.key === 'Enter') return fetchItem(); 
+    if (event.key === 'Enter') return fetchItem();
   }
   /* Fetch on clicking button */
   function getItemByButton() {
-    return fetchItem(); 
+    return fetchItem();
   }
 
   return (
