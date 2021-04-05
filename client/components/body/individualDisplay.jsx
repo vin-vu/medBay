@@ -54,4 +54,4 @@ const IndividualDisplay = (props) => (
 
 );
 
-export default IndividualDisplay;
+export default IndividualDisplay

@@ -6,10 +6,11 @@ import {
 // Local files imports
 import LogoName from './navbar/logoName';
 import BigSearch from './navbar/bigSearch';
-// import Categories from './navbar/categories';
 
-import Login from './navbar/login.jsx';
-import Signup from './navbar/signup.jsx';
+import Categories from './navbar/categories';
+
+import Login from './navbar/login';
+import Signup from './navbar/signup';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -53,16 +54,16 @@ const Navbar = (props) => {
           </Box>
           <LogoName />
           <div className={classes.grow} />
-          <BigSearch />
+          <BigSearch setState={props.setState} />
           <div className={classes.grow} />
           <ButtonGroup variant="contained">
             <Login />
             <Signup />
           </ButtonGroup>
         </Toolbar>
-        {/* <Toolbar>
-        <section id="categoryPlaceholder">categories</section>
-      </Toolbar> */}
+        <Toolbar>
+          <Categories setState={props.setState} />
+        </Toolbar>
       </AppBar>
     </HideOnScroll>
   );
