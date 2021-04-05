@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Container, Grid } from '@material-ui/core';
 import IndividualDisplay from './individualDisplay.jsx';
 
 // '/api/allProducts'
@@ -21,6 +22,7 @@ const ItemOuterContainer = (props) => {
         category={element.Category}
         image={element.ImageURL}
         price={element.Price}
+        quantity={element.Quantity}
         buttonFunc={cartCallback}
         key={`${currentNumber + 1}`}
       />);
@@ -37,15 +39,25 @@ const ItemOuterContainer = (props) => {
       .then((dbListings) => {
         console.log(dbListings);
         const listingData = createListingElements(dbListings, listingsState.addToCart);
-        setListingsState({ ...listingsState, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings  });
+        setListingsState({
+          ...listingsState, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings,
+        });
       })
       .catch((err) => console.log(err));
   }, []);
 
   return (
-    <div id="itemOuterCountainer">
+    <Grid
+      container
+      display="flex"
+      flexWrap="wrap"
+      direction="row"
+      justify="flex-start"
+      alignItems="flex-end"
+      id="itemOuterCountainer"
+    >
       {listingsState.listingsToRender}
-    </div>
+    </Grid>
   );
 };
 

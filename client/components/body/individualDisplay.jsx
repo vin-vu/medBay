@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 const AddToCartButton = styled(Button)({
   background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
   border: 0,
-  borderRadius: 3,
+  borderRadius: 10,
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
   color: 'White',
   height: 36,
@@ -14,30 +14,43 @@ const AddToCartButton = styled(Button)({
 });
 
 const IndividualDisplay = (props) => (
-  <div id={props.key}>
-    <img src={props.image} alt='Image not Found'/>
-    <span>
+  <Box
+    id={props.key}
+    width="20%"
+    display="flex"
+    flexDirection="column"
+    padding="2.5% 2.5%"
+  >
+    <Box flexGrow="1">
+      <img src={props.image} alt="Image not Found" width="100%"/>
+    </Box>
+    <Box component="span" flexGrow="1" padding="1% 0px" color="primary.main">
       Product:
       {' '}
       {props.title}
-    </span>
-    <span>
-      Category:
-      {' '}
-      {props.category}
-    </span>
-    <span>
+    </Box>
+    <Box component="span" flexGrow="1" padding="1% 0px" color="text.secondary">
       Description:
       {' '}
       {props.description}
-    </span>
-    <span>
+    </Box>
+    <Box component="span" flexGrow="1" padding="1% 0px" color="text.secondary">
+      Category:
+      {' '}
+      {props.category}
+    </Box>
+    <Box component="span" flexGrow="1" padding="1% 0px" color="info.main">
+      Quantity:
+      {' '}
+      {props.quantity}
+    </Box>
+    <Box component="span" flexGrow="1" padding="1% 0px 2% 0px" color="text.primary">
       Price:
       {' '}
       {props.price}
-    </span>
+    </Box>
     <AddToCartButton onClick={props.buttonFunc}>Add To Cart</AddToCartButton>
-  </div>
+  </Box>
 
 );
 
