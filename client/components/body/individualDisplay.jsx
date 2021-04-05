@@ -4,7 +4,7 @@ import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
 const AddToCartButton = styled(Button)({
-  background: 'linear-gradient(45deg, #FE6B8B 30%, #FF8E53 90%)',
+  background: 'linear-gradient(45deg, #3F9D47 40%, #00d4ff 100%)',
   border: 0,
   borderRadius: 10,
   boxShadow: '0 3px 5px 2px rgba(255, 105, 135, .3)',
@@ -22,7 +22,7 @@ const IndividualDisplay = (props) => (
     padding="2.5% 2.5%"
   >
     <Box flexGrow="1">
-      <img src={props.image} alt="Image Not Found" width="100%"/>
+      <img src={props.image} alt="Image Not Found" width="100%" />
     </Box>
     <Box component="span" flexGrow="1" padding="1% 0px" color="primary.main">
       Product:
@@ -54,4 +54,4 @@ const IndividualDisplay = (props) => (
 
 );
 
-export default IndividualDisplay;
+export default IndividualDisplay

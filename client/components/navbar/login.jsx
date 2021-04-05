@@ -9,7 +9,7 @@ import {
 } from 'material-ui-popup-state/hooks';
 
 const Login = (props) => (
-  <Button onClick={(e) => alert('Login Button Clicked!')}>Login</Button>
+  <Button onClick={(e) => alert('Login Button Clicked!')} color="secondary" variant="contained">Login</Button>
 );
 
 export default Login;

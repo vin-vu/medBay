@@ -4,13 +4,10 @@ import ItemOuterContainer from './body/itemOuterContainer.jsx';
 // import IndividualDisplay from './body/individualDisplay.jsx';
 
 const MainBody = (props) => {
-  const [bodyState, setBodyState] = useState({
-    someFetch: [],
-  });
-
+  // console.log(props.items);
   return (
     <div id='body'>
-      <ItemOuterContainer />
+      <ItemOuterContainer items={props.items} />
       <div id="placeholder for LoadMoreBtn component, IndividualDisplay may also be a child of this route" />
     </div>
   );
