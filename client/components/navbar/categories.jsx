@@ -4,13 +4,13 @@ import React, { useEffect, useState } from 'react';
 function Categories(props) {
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    fetch(`/api/categoryList`)
-      .then((res) => res.json())
-      .then((arrOfCategories) => setCategories(arrOfCategories))
-      .catch((err) => console.log('There has been a problem with fetching categories ', err));
-  });
-
+  // useEffect(() => {
+  //   fetch(`/api/categoryList`)
+  //     .then((res) => res.json())
+  //     .then((arrOfCategories) => setCategories(arrOfCategories))
+  //     .catch((err) => console.log('There has been a problem with fetching categories ', err));
+  // });
+  // [ ]
   // fetch data based on category by attaching specific category as a query parameter to the end of URL
   function getItemByButton(category) {
     fetch(`api/categoryProducts?Category=${category}`)
