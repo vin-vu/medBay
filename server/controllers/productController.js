@@ -60,7 +60,7 @@ productController.addProducts = (req, res, next) => {
 productController.getSearchedProducts = (req, res, next) => {
   const { productName } = req.body;
   models.Product.find({ Title: { $regex: productName, $options: 'i' } },
-    'Title Description Price ImageURL Category',
+    'Title Description Price ImageURL Category Quantity',
     { limit: 20 },
     (err, products) => {
       if (err) return next({ log: err, message: { err: 'productController.getSearchedProducts failed.' } });
