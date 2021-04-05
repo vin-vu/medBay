@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, orange, green } from '@material-ui/core/colors';
+import { purple, orange, lightBlue } from '@material-ui/core/colors';
 import Navbar from './components/navbar';
 import MainBody from './components/mainBody';
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: purple[500],
+      main: '#3F9D47',
     },
     secondary: {
-      main: orange[500],
+      main: lightBlue[500],
     },
   },
 });

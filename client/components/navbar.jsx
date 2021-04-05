@@ -1,7 +1,7 @@
 // Dependancy imports
 import React, { useState } from 'react';
 import {
-  ButtonGroup, AppBar, Toolbar, Slide, useScrollTrigger, makeStyles,
+  ButtonGroup, AppBar, Toolbar, Box, Slide, useScrollTrigger, makeStyles,
 } from '@material-ui/core/';
 // Local files imports
 import LogoName from './navbar/logoName';
@@ -14,6 +14,9 @@ import Signup from './navbar/signup.jsx';
 const useStyles = makeStyles((theme) => ({
   grow: {
     flexGrow: 1,
+  },
+  logo: {
+    marginRight: theme.spacing(2),
   },
   sectionDesktop: {
     display: 'none',
@@ -45,6 +48,9 @@ const Navbar = (props) => {
     <HideOnScroll>
       <AppBar>
         <Toolbar>
+          <Box className={classes.logo}>
+            <img src="../assets/sickBay.jpg" alt="Logo" width="70px" height="70px" style={{ 'border-radius': '15px' }} />
+          </Box>
           <LogoName />
           <div className={classes.grow} />
           <BigSearch />
