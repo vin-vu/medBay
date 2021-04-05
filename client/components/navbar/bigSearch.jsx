@@ -58,10 +58,10 @@ export default function BigSearch(props) {
 
   /* Fetch from server */
   function fetchItem() {
-    fetch('/api/allProducts', fetchData)
+    fetch('/api/productSearch', fetchData)
       .then((res) => res.json())
       .then((data) => {
-        console.log(data);
+        console.log("product search successed: ", data);
         return props.setState(data);
       })
       .catch((err) => console.log('There has been a problem with fetching items ', err));

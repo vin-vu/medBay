@@ -54,16 +54,16 @@ const Navbar = (props) => {
           </Box>
           <LogoName />
           <div className={classes.grow} />
-          <BigSearch />
+          <BigSearch setState={props.setState} />
           <div className={classes.grow} />
           <ButtonGroup variant="contained">
             <Login />
             <Signup />
           </ButtonGroup>
         </Toolbar>
-        {/* <Toolbar>
-        <section id="categoryPlaceholder">categories</section>
-      </Toolbar> */}
+        <Toolbar>
+          <Categories setState={props.setState} />
+        </Toolbar>
       </AppBar>
     </HideOnScroll>
   );

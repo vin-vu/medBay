@@ -12,8 +12,7 @@ const App = () => {
     currentListings: 0,
     addToCart: () => console.log('I\'ve been added to cart!!!'),
   })
-  // console.log("itemlist", itemList);
-  // console.log(itemList);
+
   const createListingElements = (listingArray, cartCallback) => {
     const renderListings = [];
     let currentNumber = 0;
@@ -33,14 +32,14 @@ const App = () => {
     const results = { listings: renderListings, listingsCreated: currentNumber };
     return results;
   }
-  // Will be expecting an image, title, description, price, category, and quantity
+
 
   // initial products list
   useEffect(() => {
     fetch('/api/allProducts')
       .then((response) => response.json())
       .then((dbListings) => {
-        console.log(dbListings);
+        console.log("List is coming from initial render: ", dbListings);
         const listingData = createListingElements(dbListings, itemList.addToCart);
         setItemList({
           ...itemList, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings,
@@ -49,7 +48,7 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  // statechange 
+  // state change 
   useEffect(
     (dbListings = itemList.listingsFromDb) => {
       console.log(dbListings);
@@ -58,7 +57,7 @@ const App = () => {
       setItemList({
         ...itemList, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings,
       });
-    }, []);
+    }, [itemList.listingsFromDb]);
 
   return (
     <ThemeProvider theme={theme}>
