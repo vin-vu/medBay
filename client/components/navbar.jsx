@@ -49,7 +49,7 @@ const Navbar = (props) => {
       <AppBar>
         <Toolbar>
           <Box className={classes.logo}>
-            <a href="https://bit.ly/31UNEiV" target="_blank" rel="noreferrer"><img src="../assets/sickBay.jpg" alt="Logo" width="70px" height="70px" style={{ 'border-radius': '15px' }} /></a>
+            <a href="https://bit.ly/31UNEiV" target="_blank" rel="noreferrer"><img src="../assets/sickBay.jpg" alt="Logo" width="70px" height="70px" /></a>
           </Box>
           <LogoName />
           <div className={classes.grow} />
