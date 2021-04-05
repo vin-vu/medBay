@@ -8,13 +8,18 @@ router.get('/allProducts', productController.getProducts, (req, res) => {
   res.status(200).json(res.locals);
 });
 
+// GET FIRST 8 IMAGES
+router.get('/topProducts', productController.getTopProducts, (req, res) => {
+  res.status(200).json(res.locals);
+});
+
 // GET CATEGORY LIST
 router.get('/categoryList', productController.getCategoryList, (req, res) => {
   res.status(200).json(res.locals);
 });
 
-// GET FIRST 8 IMAGES
-router.get('/topProducts', productController.getTopProducts, (req, res) => {
+// GET SPECIFIC CATEGORY PRODUCTS
+router.get('/categoryProducts', productController.categoryProducts, (req, res) => {
   res.status(200).json(res.locals);
 });
 

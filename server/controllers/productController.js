@@ -55,6 +55,20 @@ productController.addProducts = (req, res, next) => {
     }));
 };
 
+// GET CATEGORY LIST
+productController.categoryProducts = (req, res, next) => {
+  const { query } = req;
+  models.Product.find(query)
+    .then((data) => {
+      res.locals = data;
+      next();
+    })
+    .catch((err) => next({
+      log: err,
+      message: { err: 'productController.categoryProducts failed.' },
+    }));
+};
+
 // ============ !!!DANGER DANGER DANGER!!! ============
 // CLEAN DATABASE
 productController.deleteProducts = (req, res, next) => {
