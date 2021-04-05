@@ -1,7 +1,7 @@
 // Dependancy imports
 import React, { useState } from 'react';
 import {
-  ButtonGroup, AppBar, Toolbar, makeStyles,
+  ButtonGroup, AppBar, Toolbar, Slide, useScrollTrigger, makeStyles,
 } from '@material-ui/core/';
 // Local files imports
 import LogoName from './navbar/logoName';
@@ -23,24 +23,42 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+// EXTRA FUNCTIONALITY TO HIDE WHILE SCROLLING
+function HideOnScroll(props) {
+  const { children, window } = props;
+  const trigger = useScrollTrigger({ target: window ? window() : undefined });
+
+  return (
+    <Slide appear={false} direction="down" in={!trigger}>
+      {children}
+    </Slide>
+  );
+}
+
+// HideOnScroll.propTypes = {
+//   children: PropTypes.element.isRequired,
+// };
+
 const Navbar = (props) => {
   const classes = useStyles();
   return (
-    <AppBar>
-      <Toolbar>
-        <LogoName />
-        <div className={classes.grow} />
-        <BigSearch />
-        <div className={classes.grow} />
-        <ButtonGroup variant="contained">
-          <Signup />
-          <Login />
-        </ButtonGroup>
-      </Toolbar>
-      {/* <Toolbar>
+    <HideOnScroll>
+      <AppBar>
+        <Toolbar>
+          <LogoName />
+          <div className={classes.grow} />
+          <BigSearch />
+          <div className={classes.grow} />
+          <ButtonGroup variant="contained">
+            <Login />
+            <Signup />
+          </ButtonGroup>
+        </Toolbar>
+        {/* <Toolbar>
         <section id="categoryPlaceholder">categories</section>
       </Toolbar> */}
-    </AppBar>
+      </AppBar>
+    </HideOnScroll>
   );
 };
 
