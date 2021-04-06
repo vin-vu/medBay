@@ -34,7 +34,22 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 
+// const cartSchema = new Schema({
+//   products: [
+//     {
+//       title: String, // productTitle
+//       id: {
+//         type: Schema.Types.ObjectId,
+//         ref: 'product'
+//       }
+//     },
+//   ]
+// })
+
+// const Cart = mongoose.model('cart', cartSchema);
+
+
 module.exports = {
   Product,
-  User,
+  User
 };
