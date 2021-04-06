@@ -15,13 +15,14 @@ const theme = createMuiTheme({
     },
   },
 });
+
 const App = () => {
   const [itemList, setItemList] = useState({
     listingsFromDb: [],
     listingsToRender: [],
     currentListings: 0,
     addToCart: () => console.log('I\'ve been added to cart!!!'),
-  })
+  });
 
   const createListingElements = (listingArray, cartCallback) => {
     const renderListings = [];
@@ -41,14 +42,14 @@ const App = () => {
     }
     const results = { listings: renderListings, listingsCreated: currentNumber };
     return results;
-  }
+  };
 
   // initial products list
   useEffect(() => {
     fetch('/api/allProducts')
       .then((response) => response.json())
       .then((dbListings) => {
-        console.log("List is coming from initial render: ", dbListings);
+        console.log('List is coming from initial render: ', dbListings);
         const listingData = createListingElements(dbListings, itemList.addToCart);
         setItemList({
           ...itemList, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings,
@@ -57,7 +58,7 @@ const App = () => {
       .catch((err) => console.log(err));
   }, []);
 
-  // state change 
+  // state change
   useEffect(
     (dbListings = itemList.listingsFromDb) => {
       console.log(dbListings);
@@ -66,11 +67,13 @@ const App = () => {
       setItemList({
         ...itemList, listingsToRender: listingData.listings, currentListings: listingData.listingsCreated, listingsFromDb: dbListings,
       });
-    }, [itemList.listingsFromDb]);
+    }, [itemList.listingsFromDb],
+  );
 
   return (
     <ThemeProvider theme={theme}>
       <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} />
+      <div style={{ height: '150px' }} />
       <MainBody items={itemList.listingsToRender} />
     </ThemeProvider>
   );
