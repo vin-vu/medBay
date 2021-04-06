@@ -5,6 +5,16 @@ import Navbar from './components/navbar';
 import MainBody from './components/mainBody';
 import IndividualDisplay from './components/body/individualDisplay';
 
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+      main: '#3F9D47',
+    },
+    secondary: {
+      main: lightBlue[500],
+    },
+  },
+});
 const App = () => {
   const [itemList, setItemList] = useState({
     listingsFromDb: [],
@@ -32,7 +42,6 @@ const App = () => {
     const results = { listings: renderListings, listingsCreated: currentNumber };
     return results;
   }
-
 
   // initial products list
   useEffect(() => {
@@ -66,15 +75,5 @@ const App = () => {
     </ThemeProvider>
   );
 };
-const theme = createMuiTheme({
-  palette: {
-    primary: {
-      main: '#3F9D47',
-    },
-    secondary: {
-      main: lightBlue[500],
-    },
-  },
-});
 
 export default App;
