@@ -1,8 +1,10 @@
+// Boilerplate to utilizes Material UI boxes and styling
 import React, { useState } from 'react';
 import { styled } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
 
+// React/material UI Button stylizing, special constructor to enforce style when using material ui
 const AddToCartButton = styled(Button)({
   background: 'linear-gradient(45deg, #3F9D47 40%, #00d4ff 100%)',
   border: 0,
@@ -13,6 +15,11 @@ const AddToCartButton = styled(Button)({
   padding: '0 30px',
 });
 
+// IndividualDisplay React constructor
+// Utilizes Box react/material ui special component
+// Allows for stylistic control directly in our code
+// Assignment of all props that were drilled into this point
+// State is managed at the App.jsx level, please refer there
 const IndividualDisplay = (props) => (
   <Box
     id={props.key}

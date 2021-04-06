@@ -1,3 +1,4 @@
+// Boilerplate to make react matertial ui popovers work
 import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
@@ -11,12 +12,18 @@ import {
 } from 'material-ui-popup-state/hooks';
 import { TextField } from '@material-ui/core';
 
+// Style constructor for material ui, specifically controlls the displayed text with typography 
 const styles = (theme) => ({
   typography: {
     margin: theme.spacing(2),
   },
 });
 
+// React Material UI special class for popoevers, 
+// manages state in the first const and renders React/Material UI components in the return
+// must use bindTrigger on the button component to trigger the popover
+// the popover component controls where the popover is displayed
+// the typography component controls what text is displayed via forms, divs, spans etc
 const SignupPopupState = ({ classes }) => {
   const popupState = usePopupState({
     variant: 'popover',
@@ -51,8 +58,10 @@ const SignupPopupState = ({ classes }) => {
   );
 };
 
+// configures a class prop type for the respective react material ui constructor
 SignupPopupState.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
+// export the react material ui component applying the styles that where initially defined
 export default withStyles(styles)(SignupPopupState);
