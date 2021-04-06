@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon server/server.js",
-    "build": "NODE_ENV=production webpack",
-    "dev": "NODE_ENV=development webpack-dev-server & npm start",
+    "build": "cross-env process.env.NODE_ENV=production webpack",
+    "dev": "cross-env process.env.NODE_ENV=development webpack-dev-server & npm start",
     "dev-windows": "cross-env process.env.NODE_ENV=development concurrently \"webpack-dev-server --open\" \" npm start\""
   },
   "repository": {
@@ -28,7 +28,9 @@
     "browserify": "^17.0.0",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
+    "enzyme": "^3.11.0",
     "express": "^4.12.3",
+    "jest": "^26.6.3",
     "material-ui-popup-state": "^1.8.0",
     "moment": "^2.29.1",
     "mongoose": "^5.12.3",
@@ -39,7 +41,8 @@
     "react-color": "^2.19.3",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
-    "sass-loader": "^10.1.1"
+    "sass-loader": "^10.1.1",
+    "supertest": "^6.1.3"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
