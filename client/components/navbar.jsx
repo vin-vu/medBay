@@ -47,7 +47,7 @@ const Navbar = (props) => {
   const classes = useStyles();
   return (
     <HideOnScroll>
-      <AppBar>
+      <AppBar >
         <Toolbar>
           <Box className={classes.logo}>
             <a href="https://bit.ly/31UNEiV" target="_blank" rel="noreferrer"><img src="../assets/sickBay.jpg" alt="Logo" width="70px" height="70px" /></a>
