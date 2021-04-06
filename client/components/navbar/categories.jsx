@@ -1,11 +1,12 @@
 import { AddCommentTwoTone } from '@material-ui/icons';
+import { Box, Button } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 
 function Categories(props) {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
-    fetch(`/api/categoryList`)
+    fetch('/api/categoryList')
       .then((res) => res.json())
       .then((arrOfCategories) => setCategories(arrOfCategories))
       .catch((err) => console.log('There has been a problem with fetching categories ', err));
@@ -22,14 +23,22 @@ function Categories(props) {
       })
       .catch((err) => console.log('There has been a problem with fetching categories: ', err));
   }
-
   return (
-    <div>
-      {categories.map((category, index) =>
-        <div id={category} key={index} onClick={() => getItemByButton(category)}>{category}</div>
-      )}
-    </div>
+    <Box display="flex" justifyContent="space_between">
+      {
+      categories
+        .map((category, index) => (
+          <Button color="secondary" 
+                  variant="contained" 
+                  id={category} 
+                  key={index} 
+                  onClick={() => getItemByButton(category)}
+          >
+            {category}
+          </Button>
+        ))
+      }
+    </Box>
   );
 }
-
 export default Categories;
