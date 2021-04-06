@@ -39,7 +39,7 @@ const SignupPopupState = ({ classes }) => {
         }}
       >
         <Typography className={classes.typography}>
-          <form action="/api/signup" method="POST">
+          <form action="/api/signup" method="POST" >
             <TextField required id="standard-required" label="Username Required" type="text" defaultValue="Username" name="username" />
             <TextField required id="standard-password-input" label="Password Required" type="password" defaultValue="" name="password" />
             <TextField required id="standard-password-input" label="Repeat Required" type="password" defaultValue="" name="psw-repeat" />
