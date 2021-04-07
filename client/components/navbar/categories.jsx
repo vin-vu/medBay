@@ -23,6 +23,7 @@ function Categories(props) {
       })
       .catch((err) => console.log('There has been a problem with fetching categories: ', err));
   }
+
   return (
     <Box display="flex" justifyContent="space_between">
       {
@@ -41,4 +42,5 @@ function Categories(props) {
     </Box>
   );
 }
+
 export default Categories;
