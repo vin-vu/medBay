@@ -34,22 +34,36 @@ const userSchema = new Schema({
 
 const User = mongoose.model('User', userSchema);
 
-// const cartSchema = new Schema({
-//   products: [
-//     {
-//       title: String, // productTitle
-//       id: {
-//         type: Schema.Types.ObjectId,
-//         ref: 'product'
-//       }
-//     },
-//   ]
-// })
+// {
+// _id: 606cf6e64ef9f384e0ff9f0a
+// Title: "Face Shield Visor for Infection Control"
+// Description: "Protects entire face from splatters of liquid. Impact resistant. Anti-..."
+// Category: "PPE"
+// ImageURL: "https://fetchppe.online/u_file/2004/products/07/a8128aca75.jpg.640x640..."
+// Price: 7.99
+// Quantity: 45
+// __v: 0
+// }
 
-// const Cart = mongoose.model('cart', cartSchema);
+const cartSchema = new Schema({
+  // hold quantity defaults to 0
+  products: [
+    {
+      title: String, // productTitle
+      quantity: Number,
+      id: {
+        type: Schema.Types.ObjectId,
+        ref: 'product'
+      }
+    },
+  ]
+})
+
+const Cart = mongoose.model('cart', cartSchema);
 
 
 module.exports = {
   Product,
   User,
+  cartSchema
 };
