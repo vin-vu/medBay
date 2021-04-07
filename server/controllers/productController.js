@@ -146,7 +146,7 @@ productController.getCart = (req, res, next) => {
 productController.getCartProduct = (req, res, next) => {
   // This is what the client should send: {id: 606d3ad382f8173e94b23732}
   const { id } = req.body
-  // console.log("this is our body: ", id)
+  console.log("this is our body: ", id)
   models.Product.findById(id)
   .then((product) => {
     res.locals.product = product;
@@ -162,50 +162,39 @@ productController.getCartProduct = (req, res, next) => {
 
 
 // Adding products to cart to existing user
-productController.addCart = (req, res, next) => {
-  // console.log('these are our cookies: ', req.cookies)
-  // console.log("passed down data: ", res.locals.product)
+productController.addCart = async (req, res, next) => {
+  console.log('these are our cookies: ', req.cookies)
+  console.log("passed down data: ", res.locals.product)
   const usernameId = req.cookies.ssid;
-  models.Cart.find({userId: usernameId})
-  .then((cart) => {
-    console.log('our cart: ', cart.products)
-     cart.products.push({
-      Title: res.locals.product.Title,
-      ImageURL: res.locals.product.ImageURL,
-      productId: res.locals.product._id,
-      quantity: 1,
-      price: res.locals.product.Price
-     })
-    console.log('cart updated')
-     next();
-  })
-  .then(() => {
-    res.locals.cart = cart.save()
-    console.log("this is our updated products cart: ", res.locals.cart)
-    next();
-  })
-  .catch((err) => ({
-    log: err,
-    message: { err: 'productController.addCart failed'}
-  }));
-
+  console.log("User Id: ",usernameId)
+  // try {
+  // let cart = await models.Cart.findOne({userId: usernameId})
+  // console.log('this is our cart:', cart)
+  // if(cart) {
+  //     cart.products.push({
+  //       Title: res.locals.product.Title,
+  //       ImageURL: res.locals.product.ImageURL,
+  //       productId: res.locals.product._id,
+  //       quantity: 1,
+  //       price: res.locals.product.Price
+  //     })
+  //     cart = await cart.save();
+  //     res.locals.cart = cart
+  //   }
+  //   console.log('this is the updated cart: ', res.locals.cart)
+  //   console.log('this is the updated cart 2: ', cart)
+  // }  catch (err) {
+  //   console.log(err);
+  //   res.status(500).send("Something went wrong");
+  // }
+ 
+}
 
 
   // FIND THE CORRECT CART (CORRECT CART MEANS USER'S CART or TEMP CART)
     // THEN PUSH ITEMS TO CART
-  //models.Cart.insertMany()
-  // console.log("this is our body: ", id)
-  // models.Product.findById(id)
-  // .then((data) => {
-  //   res.locals = data;
-  //   console.log('our data: ', res.locals)
-  //   next();
-  // })
-  // .catch((err) => ({
-  //   log: err,
-  //   message: { err: 'productController.addCart failed'}
-  // }));
-}
+ 
+
 
 // productController.addCart = (req, res, next) => {
 //   // console.log('these are our cookies: ', req.cookies)
@@ -213,7 +202,7 @@ productController.addCart = (req, res, next) => {
 //   const usernameId = req.cookies.ssid;
 //   models.Cart.find({userId: usernameId})
 //   .then((cart) => {
-//     console.log('our cart: ', cart.products)
+//     console.log('our cart: ', cart)
 //      cart.products.push({
 //       Title: res.locals.product.Title,
 //       ImageURL: res.locals.product.ImageURL,
@@ -233,5 +222,6 @@ productController.addCart = (req, res, next) => {
 //     log: err,
 //     message: { err: 'productController.addCart failed'}
 //   }));
+// }
 
 module.exports = productController;
