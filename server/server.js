@@ -4,12 +4,14 @@ const app = express();
 // require in cors
 const cors = require('cors');
 const api = require('./routes/api');
+const cookieParser = require('cookie-parser');
 
 // Since fetch was unable with an endpoint, used cors to fetch with an entire url
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+// Parse cookies & save to req.cookies
+app.use(cookieParser());
 app.use('/api', api);
 
 // error handler

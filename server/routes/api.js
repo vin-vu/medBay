@@ -24,14 +24,19 @@ router.get('/categoryProducts', productController.categoryProducts, (req, res) =
   res.status(200).json(res.locals);
 });
 
+// CREATE EMPTY CARD WHEN USER SIGNSUP/LOGSIN
+router.get('/createCart', productController.createCart, (req,res) => {
+  res.status(200).json(res.locals)
+})
+
 // ADDING TO CART
 // FIND ITEM IN PRODUCT DATABASE
 router.post('/addCart', productController.getCartProduct, productController.addCart, (req, res) => {
   res.status(200).json(res.locals);
 })
 
-// VERIFY USER INFORMATION FROM DB
-router.post('/verifyUser', userController.verifyUser, (req, res) => {
+// VERIFY USER INFORMATION FROM DB // LOGIN
+router.post('/login', userController.login, userController.setSSIDCookie, productController.getCart, (req, res) => {
   res.status(200).json(res.locals);
 })
 
@@ -41,8 +46,8 @@ router.post('/product', productController.addProducts, (req, res) => {
 });
 
 // ADD NEW USER TO DATABASE
-router.post('/signup', userController.addUser, (req, res) => {
-  res.status(200).json('Your account has been successfully added.');
+router.post('/signup', userController.addUser, userController.setSSIDCookie, productController.createCart, (req, res) => {
+  res.status(200).json(res.locals);
 });
 
 // GET ALL ITEMS THAT PERTAIN TO THE SEARCHED NAME OF ITEM

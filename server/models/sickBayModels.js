@@ -16,6 +16,7 @@ mongoose
 
 const { Schema } = mongoose;
 
+// ------CREATE A PRODUCTS SCHEMA------------------
 const productSchema = new Schema({
   Title: { type: String, required: true },
   Description: String,
@@ -27,9 +28,12 @@ const productSchema = new Schema({
 
 const Product = mongoose.model('product', productSchema);
 
+
+//---------CREATE AN USERS SCHEMA
 const userSchema = new Schema({
   username: { type: String, required: true, unique: true },
   password: { type: String, required: true },
+
 });
 
 const User = mongoose.model('User', userSchema);
@@ -45,12 +49,21 @@ const User = mongoose.model('User', userSchema);
 // __v: 0
 // }
 
-// create schema for addCart
+// -------CREATE A CART SCHEMA---------------
 const cartSchema = new Schema({
   // hold quantity defaults to 0
-  userId: String,
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "user"
+  },
 
-  products: [ {Title: String, Price: String}]
+  products: [{
+    Title: String,
+    ImageURL: String,
+    productId: Number,
+    quantity: Number,
+    price: Number
+   }],
   // products: [
   //   {
   //     title: String,
