@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { purple, orange, lightBlue } from '@material-ui/core/colors';
+import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Link
 } from "react-router-dom";
+
+
 import Navbar from './components/navbar';
 import MainBody from './components/mainBody';
 import IndividualDisplay from './components/body/individualDisplay';
 import NavBar from './components/common/NavBar';
 
+import HomePage from './components/HomePage';
+
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#3F9D47',
+      main: '#4caf50',
     },
     secondary: {
-      main: lightBlue[500],
+      main: '#42a5f5',
     },
   },
 });
@@ -96,28 +101,17 @@ const App = () => {
   return (
     <Router>
       <ThemeProvider theme={theme}>
+        <CssBaseline />
         <NavBar />
         {/* <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} /> */}
-        <div style={{ height: '150px' }} />
-
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/products">About</Link>
-            </li>
-          </ul>
-        </nav>
+        <div style={{ height: '100px' }} />
         
         <Switch>
           <Route path="/products">
             <MainBody items={itemList.listingsToRender} />
           </Route>
           <Route path="/">
-            {/* <Homepage /> */}
-            <div><h2>THIS IS THE HOMEPAGE</h2></div>
+            <HomePage />
           </Route>
         </Switch>
       </ThemeProvider>

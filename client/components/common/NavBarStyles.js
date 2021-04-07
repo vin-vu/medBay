@@ -79,4 +79,7 @@ export default makeStyles((theme) => ({
       display: 'none',
     },
   },
+  popover: {
+    padding: theme.spacing(3),
+  },
 }));
