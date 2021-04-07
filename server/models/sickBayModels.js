@@ -45,18 +45,22 @@ const User = mongoose.model('User', userSchema);
 // __v: 0
 // }
 
+// create schema for addCart
 const cartSchema = new Schema({
   // hold quantity defaults to 0
-  products: [
-    {
-      title: String, // productTitle
-      quantity: Number,
-      id: {
-        type: Schema.Types.ObjectId,
-        ref: 'product'
-      }
-    },
-  ]
+  userId: String,
+
+  products: [ {Title: String, Price: String}]
+  // products: [
+  //   {
+  //     title: String,
+  //     quantity: Number,
+  //     id: {
+  //       type: Schema.Types.ObjectId,
+  //       ref: 'product',
+  //     }
+  //   },
+  // ]
 })
 
 const Cart = mongoose.model('cart', cartSchema);
@@ -65,5 +69,15 @@ const Cart = mongoose.model('cart', cartSchema);
 module.exports = {
   Product,
   User,
-  cartSchema
+  Cart
 };
+
+// products: [
+//   {
+//     title: String,
+//     quantity: Number,
+//     id: {
+//       type: Schema.Types.ObjectId,
+//       ref: 'product',
+//     }
+//   },

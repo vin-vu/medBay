@@ -1,3 +1,4 @@
+const { model } = require('mongoose');
 const models = require('../models/sickBayModels');
 
 const productController = {};
@@ -58,6 +59,7 @@ productController.categoryProducts = (req, res, next) => {
 // ADD NEW PRODUCTS
 productController.addProducts = (req, res, next) => {
   const newProducts = req.body;
+
   models.Product.insertMany(newProducts)
     .then((data) => {
       res.locals = data;
@@ -81,6 +83,40 @@ productController.getSearchedProducts = (req, res, next) => {
       next();
     });
 };
+
+// GETTING A PRODUCT FROM PRODUCT DATABASE
+// $push into cart schema
+productController.getCartProduct = (req, res, next) => {
+  // This is what the client should send: {id: 606d3ad382f8173e94b23732}
+  const { id } = req.body
+  console.log("this is our body: ", id)
+  models.Product.findById(id)
+  .then((data) => {
+    res.locals.data = data;
+    console.log('our data: ', res.locals.data)
+    next();
+  })
+  .catch((err) => ({
+    log: err,
+    message: { err: 'productController.addCart failed'}
+  }));
+};
+
+productController.addCart = (req, res, next) => {
+  console.log("passed down data: ", res.locals.data)
+  models.Cart.insertMany()
+  // console.log("this is our body: ", id)
+  // models.Product.findById(id)
+  // .then((data) => {
+  //   res.locals = data;
+  //   console.log('our data: ', res.locals)
+  //   next();
+  // })
+  // .catch((err) => ({
+  //   log: err,
+  //   message: { err: 'productController.addCart failed'}
+  // }));
+}
 
 // ============ !!!DANGER DANGER DANGER!!! ============
 // CLEAN DATABASE

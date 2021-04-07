@@ -22,11 +22,12 @@ userController.verifyUser = (req, res, next) => {
     (err, user) => {
       if (err) return next({ log: err, message: 'userController.verifyUser failed' });
       if (user === null) {
-        res.locals = 'The username and password you entered did not match our records. Please double-check and try again.';
+        res.locals = 'The username and password you entered did not match our records. Please double-check and try again.'; // previous
         return next();
       }
       const verified = bcrypt.compareSync(password, user.password);
-      if (verified) res.locals = 'You have been successfully logged in. Welcome Back!';
+      // res should be user from line 22
+      if (verified) res.locals.user = user// (PREVIOUS) res.locals = 'You have been successfully logged in. Welcome Back!';
       else res.locals = 'The username and password you entered did not match our records. Please double-check and try again.';
       return next();
     });

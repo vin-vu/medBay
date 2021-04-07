@@ -24,6 +24,12 @@ router.get('/categoryProducts', productController.categoryProducts, (req, res) =
   res.status(200).json(res.locals);
 });
 
+// ADDING TO CART
+// FIND ITEM IN PRODUCT DATABASE
+router.post('/addCart', productController.getCartProduct, productController.addCart, (req, res) => {
+  res.status(200).json(res.locals);
+})
+
 // VERIFY USER INFORMATION FROM DB
 router.post('/verifyUser', userController.verifyUser, (req, res) => {
   res.status(200).json(res.locals);
