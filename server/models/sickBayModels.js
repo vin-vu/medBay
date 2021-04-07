@@ -38,6 +38,7 @@ const User = mongoose.model('User', userSchema);
 //   products: [
 //     {
 //       title: String, // productTitle
+//       quantity: { type: Number, default: 0 },
 //       id: {
 //         type: Schema.Types.ObjectId,
 //         ref: 'product'

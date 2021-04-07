@@ -6,9 +6,7 @@ import {
 // Local files imports
 import LogoName from './navbar/logoName';
 import BigSearch from './navbar/bigSearch';
-
 import Categories from './navbar/categories';
-
 import Login from './navbar/login';
 import Signup from './navbar/signup';
 

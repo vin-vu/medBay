@@ -1,9 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
 import { purple, orange, lightBlue } from '@material-ui/core/colors';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 import Navbar from './components/navbar';
 import MainBody from './components/mainBody';
 import IndividualDisplay from './components/body/individualDisplay';
+import NavBar from './components/common/NavBar';
 
 const theme = createMuiTheme({
   palette: {
@@ -87,11 +94,35 @@ const App = () => {
   );
   // Main render for the application with associated prop drilling
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} />
-      <div style={{ height: '150px' }} />
-      <MainBody items={itemList.listingsToRender} />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <NavBar />
+        {/* <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} /> */}
+        <div style={{ height: '150px' }} />
+
+        <nav>
+          <ul>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/products">About</Link>
+            </li>
+          </ul>
+        </nav>
+        
+        <Switch>
+          <Route path="/products">
+            <MainBody items={itemList.listingsToRender} />
+          </Route>
+          <Route path="/">
+            {/* <Homepage /> */}
+            <div><h2>THIS IS THE HOMEPAGE</h2></div>
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </Router>
+    
   );
 };
 
