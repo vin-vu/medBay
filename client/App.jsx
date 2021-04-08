@@ -31,12 +31,7 @@ const App = () => {
     listingsToRender: [],
     currentListings: 0,
     addToCart: () => {
-      fetch('/api/allProducts/')
-        .then((response) => response.json())
-        .then((response) => {
-          console.log(response[0])
-      })
-        .catch((err) => console.log(err));
+      console.log('Adding to cart');
     }
   });
 
