@@ -25,6 +25,18 @@ const useStyles = makeStyles((theme) => ({
     height: 0,
     paddingTop: '56.25%', // 16:9
   },
+  card: {
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    height: 600,
+  },
+  cardHeader: {
+    height: 150,
+  },
+  cardContent: {
+    maxHeight: 300,
+  },
   expand: {
     transform: 'rotate(0deg)',
     marginLeft: 'auto',
@@ -59,8 +71,9 @@ const IndividualDisplay = (props) => {
 
   return (
     <Grid item xs={3}>
-      <Card>
+      <Card className={classes.card}>
         <CardHeader
+          className={classes.cardHeader}
           title={props.title}
           subheader={props.category}
         />
@@ -69,7 +82,9 @@ const IndividualDisplay = (props) => {
           image={props.image}
           title={props.title}
         />
-        <CardContent>
+        <CardContent
+          className={classes.cardContent}
+        >
           <Typography variant="body2" color="textSecondary" component="p">
             {props.description}
           </Typography>

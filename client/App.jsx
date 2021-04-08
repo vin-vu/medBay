@@ -7,8 +7,6 @@ import {
   Route
 } from "react-router-dom";
 
-import Navbar from './components/navbar';
-
 import NavBar from './components/common/NavBar';
 import HomePage from './components/HomePage';
 
