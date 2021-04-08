@@ -161,7 +161,7 @@ productController.getCartUser = (req, res, next) => {
 // $push into cart schema
 productController.getCartProduct = (req, res, next) => {
   // This is what the client should send: {id: 606d3ad382f8173e94b23732, quantity: }
-  const { id } = req.body
+  const { id } = req.body;
   // console.log("this is our body: ", id)
   models.Product.findById(id)
   .then((product) => {
@@ -179,36 +179,58 @@ productController.getCartProduct = (req, res, next) => {
 
 // Adding products to cart to existing user
 productController.addCart = async (req, res, next) => {
-  console.log('these are our cookies: ', req.cookies)
-  console.log("passed down data: ", res.locals.product)
+  // console.log('these are our cookies: ', req.cookies)
+  // console.log("passed down data: ", res.locals.product)
   const usernameId = req.cookies.ssid;
-  console.log("User Id: ",usernameId)
+  // console.log("User Id: ",usernameId)
 
-  models.Cart.findOneAndUpdate(
-    {userId: usernameId},
-    {$push: {products:
-      {
-        Title: res.locals.product.Title,
-        ImageURL: res.locals.product.ImageURL,
-        productId: res.locals.product._id,
-        price: res.locals.product.Price,
-        quantity: 1,
-
-    }
-  }})
-  .then((cart) => {
-    res.locals.cart = cart;
-    console.log('our cart: ', res.locals.cart)
-    next();
-  })
-  .catch((err) => ({
-    log: err,
-    message: { err: 'productController.getCart failed'}
-  }));
+  let alreadyExist = false;
+  let cart = await models.Cart.findOne({userId: usernameId})
+  console.log("our cart:", cart.products);
+  console.log("new product: ", typeof res.locals.product._id.toString())
+  for (let i = 0; i < cart.products.length; i += 1) {
+    console.log("our :", typeof cart.products[i].productId)
+    if (cart.products[i].productId === res.locals.product._id.toString()) {
+      alreadyExist = true;
+    } 
+  }
+  console.log(alreadyExist)
+  if (alreadyExist === false) {
+    models.Cart.findOneAndUpdate({userId: usernameId},
+      {$push: {products:
+        {
+          Title: res.locals.product.Title,
+          ImageURL: res.locals.product.ImageURL,
+          productId: res.locals.product._id,
+          price: res.locals.product.Price,
+          }
+    }})
+    .then((cart) => {
+      res.locals.cart = cart;
+      // console.log('our cart: ', res.locals.cart)
+      next();
+    })
+    .catch((err) => ({
+      log: err,
+      message: { err: 'productController.getCart failed'}
+    }));
+  } else if (alreadyExist === true) {
+    console.log('here')
+    models.Cart.updateOne(
+      {userId: usernameId, 'products.productId': res.locals.product._id.toString()},
+    {$inc: {"products.$.quantity": 1}})
+    .then((cart) => {
+      res.locals.cart = cart;
+      console.log('our cart: ', res.locals.cart)
+      next();
+    })
+    .catch((err) => ({
+      log: err,
+      message: { err: 'productController.getCart failed'}
+    }));
+  }
 
 }
-
-
   // FIND THE CORRECT CART (CORRECT CART MEANS USER'S CART or TEMP CART)
     // THEN PUSH ITEMS TO CART
 
