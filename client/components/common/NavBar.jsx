@@ -47,11 +47,13 @@ const NavBar = (props) => {
   const catagoriesPopoverId = open ? 'catagories-popover' : undefined;
   // ------------------------------------------------------------------
 
+
   // SHOPPING CART POPOVER HANDLING -----------------------------------
   const [cartPopoverAnchorEl, setCartPopoverAnchorEl] = useState(null);
 
   const handleCartPopoverClick = (event) => {
     setCartPopoverAnchorEl(event.currentTarget);
+    return fetchCart();
   };
 
   const handleCartPopoverClose = () => {
@@ -61,6 +63,20 @@ const NavBar = (props) => {
   const isCartPopoverOpen = Boolean(cartPopoverAnchorEl);
   const cartPopoverId = open ? 'cart-popover' : undefined;
   // ------------------------------------------------------------------
+
+  // STATE MANAGEMENT FOR CART ----------------------------------------
+  const fetchCart = () => {
+    fetch('/api/getCartUser')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Successfully retrieved user cart ', data);
+        // Do stuff with cart data
+      })
+      .catch((err) => console.log('Unsuccessful cart retrieval: ', err))
+  }
+  // ------------------------------------------------------------------
+
+
 
   // PROFILE (LOGIN/SIGNOUT) POPOVER HANDLING -------------------------
   const [profilePopoverAnchorEl, setProfilePopoverAnchorEl] = useState(null);
@@ -77,6 +93,51 @@ const NavBar = (props) => {
   const profilePopoverId = open ? 'profile-popover' : undefined;
   // ------------------------------------------------------------------
 
+  // STATE MANAGEMENT FOR LOGIN / SIGNIN ------------------------------
+  const [ usernameInput, setUsernameInput ] = useState('');
+  const [ passwordInput, setPasswordInput ] = useState('');
+
+  // Update Username / Password states on every keystroke
+  const handleUsernameChange = (event) => {
+    setUsernameInput(event.target.value);
+  }
+  const handlePasswordChange = (event) => {
+    setPasswordInput(event.target.value);
+  }
+
+  // Insert loginData as post request
+  const loginData = {
+    method: 'POST',
+    body: JSON.stringify({ username: usernameInput, password: passwordInput }),
+    headers: { 'Content-Type': 'application/json' },
+  }
+
+  // Fetch from server
+  const fetchLogin = (buttonType) => {
+    const loginUrl = '/api/' + buttonType;
+    // fetch('/api/login', loginData)
+    fetch(loginUrl, loginData)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('Logged In / Sign Up Successful: ', data);
+        // Do stuff with user logged in data
+      })
+      .catch((err) => console.log('Unsuccessful login error: ', err));
+  }
+
+  // Handle Login Button Click
+  const handleLoginButtonClick = (event) => {
+    return fetchLogin('login');
+  }
+
+  // Handle Sign Up Button 
+  const handleSignupButtonClick = (event) => {
+    return fetchLogin('signup');
+  }
+
+  // ------------------------------------------------------------------
+
+  
 
   // STATE MANAGEMENT FOR CATAGORIES BUTTONS --------------------------
   const [categories, setCategories] = useState([]);
@@ -125,16 +186,29 @@ const NavBar = (props) => {
       })
       .catch((err) => console.log('There has been a problem with fetching items ', err));
   }
+
   /* Update state on every keystroke */
-  function handleChange(event) {
+  const handleChange = (event) => {
     setSearchInput(event.target.value);
   }
+
   /* Fetch on pressing enter key */
-  function getItemByEnterKey(event) {
+  const getItemByEnterKey = (event) => {
     if (event.key === 'Enter') return fetchItem();
   }
 
+  // Fetch on button click
+  const getItemByButtonClick = (event) => {
+    return fetchItem();
+  }
+
   // ------------------------------------------------------------------
+
+  
+
+
+
+  
 
 
   return (
@@ -224,16 +298,17 @@ const NavBar = (props) => {
               inputProps={{ 'aria-label': 'search' }}
               onChange={(e) => handleChange(e)}
               onKeyDown={(e) => getItemByEnterKey(e)}
-              // inputRef={ref => { this.inputRef = ref; }}
             />
-            <Button 
-              variant="contained" 
-              color="secondary" 
-              className={classes.searchButton}
-              // onClick={(e) => getItemByEnterKey(this.inputRef.value)}
-            >
-              <SearchIcon />
-            </Button>
+            <Link to="/products" style={{ textDecoration: 'none' }}>
+              <Button 
+                variant="contained" 
+                color="secondary" 
+                className={classes.searchButton}
+                onClick={(e) => getItemByButtonClick(e)}
+              >
+                <SearchIcon />
+              </Button>
+            </Link>
           </div>
           {/* ---------------------------------------------------------- */}
           <div className={classes.grow} />
@@ -314,11 +389,12 @@ const NavBar = (props) => {
               >
                 <Typography variant="h6" gutterBottom>Sign In</Typography>
                 <TextField
-                  id="filled-email-input"
-                  label="Email"
-                  type="email"
-                  autoComplete="current-email"
+                  id="filled-username-input"
+                  label="Username"
+                  type="username"
+                  autoComplete="current-username"
                   variant="filled"
+                  onChange={(e) => handleUsernameChange(e)}
                 />
                 <TextField
                   id="filled-password-input"
@@ -326,12 +402,21 @@ const NavBar = (props) => {
                   type="password"
                   autoComplete="current-password"
                   variant="filled"
+                  onChange={(e) => handlePasswordChange(e)}
                 />
                 <Divider />
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('Login Button Clicked!')}>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  onClick={(e) => handleLoginButtonClick(e)}
+                >
                   Login
                 </Button>
-                <Button variant="contained" color="primary" onClick={(e) => console.log('Login Button Clicked!')}>
+                <Button 
+                  variant="contained" 
+                  color="primary" 
+                  onClick={(e) => handleSignupButtonClick(e)}
+                >
                   Signup
                 </Button>
               </Box>

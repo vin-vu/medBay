@@ -119,7 +119,7 @@ productController.createCart = (req, res, next) => {
       if (err) return next({ log: err, message: 'userController.addUser failed' });
       if (user) {
         res.locals.user = user;
-       
+
         return next();
       }
   });
@@ -127,12 +127,28 @@ productController.createCart = (req, res, next) => {
 
 // FIND USER CART AND SEND IT TO THE CLIENT
 productController.getCart = (req, res, next) => {
-  console.log("this is locals ssid inside GET cart: ", res.locals.ssid)
+  // console.log("this is locals ssid inside GET cart: ", res.locals.ssid)
   const username = res.locals.ssid;
   models.Cart.find({userId: username})
   .then((cart) => {
     res.locals.cart = cart;
-    console.log('our cart: ', res.locals.cart)
+    // console.log('our cart: ', res.locals.cart)
+    next();
+  })
+  .catch((err) => ({
+    log: err,
+    message: { err: 'productController.getCart failed'}
+  }));
+}
+
+//FIND USER CART WHEN ALREADY LOGGED IN
+productController.getCartUser = (req, res, next) => {
+  console.log("this is locals ssid inside GET USER cart: ", req.cookies);
+  const username = req.cookies.ssid;
+  models.Cart.find({userId: username})
+  .then((cart) => {
+    res.locals.cart = cart;
+    console.log('our user cart: ', res.locals.cart)
     next();
   })
   .catch((err) => ({
@@ -146,7 +162,7 @@ productController.getCart = (req, res, next) => {
 productController.getCartProduct = (req, res, next) => {
   // This is what the client should send: {id: 606d3ad382f8173e94b23732, quantity: }
   const { id } = req.body
-  console.log("this is our body: ", id)
+  // console.log("this is our body: ", id)
   models.Product.findById(id)
   .then((product) => {
     res.locals.product = product;
@@ -177,7 +193,7 @@ productController.addCart = async (req, res, next) => {
         productId: res.locals.product._id,
         price: res.locals.product.Price,
         quantity: 1,
-    
+
     }
   }})
   .then((cart) => {
@@ -189,13 +205,13 @@ productController.addCart = async (req, res, next) => {
     log: err,
     message: { err: 'productController.getCart failed'}
   }));
- 
+
 }
 
 
   // FIND THE CORRECT CART (CORRECT CART MEANS USER'S CART or TEMP CART)
     // THEN PUSH ITEMS TO CART
- 
+
 
 
 // productController.addCart = (req, res, next) => {

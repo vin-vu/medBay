@@ -4,12 +4,14 @@ import {
   Button,
   Card, 
   CardContent, 
+  Container,
   Grid, 
   Typography 
 } from '@material-ui/core';
 
 import Banner from './homepage/Banner';
 import PopularCatagories from './homepage/PopularCatagories';
+import PopularItems from './homepage/PopularItems';
 import QualityCards from './homepage/QualityCards';
 import SecondaryBanner from './homepage/SecondaryBanner';
 
@@ -71,11 +73,31 @@ const HomePage = () => {
       </Grid>
       {/* -- POPULAR CATAGORIES SECTION ----------------------------------------- */}
       <PopularCatagories />
-      {/* --- QUALITY CARDS SECTION --------------------------------------------- */}
+      {/* -- QUALITY CARDS SECTION ---------------------------------------------- */}
       <QualityCards />
-      <PopularCatagories />
+      {/* -- POPULAR ITEMS SECTION ---------------------------------------------- */}
+      <PopularItems />
+      {/* -- SECONDARY BANNER SECTION ------------------------------------------- */}
       <SecondaryBanner />
+      <footer className={classes.footer}>
+        <Container maxWidth="lg">
+          <Typography variant="h6" align="center" gutterBottom>
+            medBay
+          </Typography>
+          <Typography variant="subtitle1" align="center" color="textSecondary" component="p">
+            Built by Team Stab Rabbit @ CS 42
+          </Typography>
+          <Typography variant="body2" color="textSecondary" align="center">
+            {'Copyright © '}
+              medBay
+            {' '}
+            {new Date().getFullYear()}
+            {'.'}
+          </Typography>
+        </Container>
+      </footer>
     </div>
+    
   )
 }
 

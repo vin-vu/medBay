@@ -16,5 +16,10 @@ export default makeStyles((theme) => ({
   },
   popularCardContent: {
     height: 100,
-  }
+  },
+  footer: {
+    // backgroundColor: theme.palette.background.paper,
+    marginTop: theme.spacing(8),
+    padding: theme.spacing(6, 0),
+  },
 }));
