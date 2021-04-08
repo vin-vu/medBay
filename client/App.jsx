@@ -1,17 +1,26 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, orange, lightBlue } from '@material-ui/core/colors';
-import Navbar from './components/navbar';
+import CssBaseline from "@material-ui/core/CssBaseline";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route
+} from "react-router-dom";
+
+import NavBar from './components/common/NavBar';
+import HomePage from './components/HomePage';
+
 import MainBody from './components/mainBody';
 import IndividualDisplay from './components/body/individualDisplay';
+
 
 const theme = createMuiTheme({
   palette: {
     primary: {
-      main: '#3F9D47',
+      main: '#4caf50',
     },
     secondary: {
-      main: lightBlue[500],
+      main: '#42a5f5',
     },
   },
 });
@@ -44,6 +53,7 @@ const App = () => {
     // increment the currentNumber by 1
     for (const element of listingArray) {
       renderListings.push(<IndividualDisplay
+        objectID={element._id}
         title={element.Title}
         description={element.Description}
         category={element.Category}
@@ -94,11 +104,23 @@ const App = () => {
   );
   // Main render for the application with associated prop drilling
   return (
-    <ThemeProvider theme={theme}>
-      <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} />
-      <div style={{ height: '150px' }} />
-      <MainBody items={itemList.listingsToRender} />
-    </ThemeProvider>
+    <Router>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
+        <NavBar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} />
+        {/* <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} /> */}
+        <div style={{ height: '100px' }} />
+        <Switch>
+          <Route path="/products">
+            <MainBody items={itemList.listingsToRender} />
+          </Route>
+          <Route path="/">
+            <HomePage />
+          </Route>
+        </Switch>
+      </ThemeProvider>
+    </Router>
+    
   );
 };
 

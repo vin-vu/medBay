@@ -9,11 +9,11 @@ const ItemOuterContainer = (props) => (
   <Grid
     container
     display="flex"
-    flexwrap="wrap"
     direction="row"
     justify="flex-start"
     alignItems="flex-end"
     id="itemOuterCountainer"
+    spacing={3}
   >
     {props.items}
   </Grid>
