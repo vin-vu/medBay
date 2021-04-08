@@ -14,7 +14,7 @@ userController.addUser = (req, res, next) => {
       if (err) return next({ log: err, message: 'userController.addUser failed' });
       if (user) {
         res.locals.user = user;
-       
+
         return next();
       }
     });
@@ -23,7 +23,7 @@ userController.addUser = (req, res, next) => {
 // VERIFY USER INFORMATION IN DB
 userController.login = (req, res, next) => {
   const { username, password } = req.body;
-  models.User.findOne({ username }, 
+  models.User.findOne({ username },
     (err, user) => {
       if (err) return next({ log: err, message: 'userController.login failed' });
       if (user === null) {
@@ -37,7 +37,23 @@ userController.login = (req, res, next) => {
     }
       else res.locals = 'The username and password you entered did not match our records. Please double-check and try again.';
       return next();
+  });
+}
+
+userController.isLoggedIn = (req, res, next) => {
+  
+  if (!req.cookies.ssid) {
+    res.locals.username = null;
+    return next();
+  } else {
+    models.User.findOne({ _id: req.cookies.ssid},
+      (err, user) => {
+        if (err) return next({ log: err, message: 'userController.isLoggedIn failed' });
+        console.log(user.username);
+        res.locals.username = user.username;
+        return next();
     });
+  }
 }
 
 // userController.setSSIDCookie
@@ -45,9 +61,9 @@ userController.login = (req, res, next) => {
 userController.setSSIDCookie = (req, res, next) => {
   // console.log('The res.locals in userController is: ', res.locals);
   res.cookie('ssid', res.locals.user.id, { httpOnly: true });
-  res.locals.ssid = res.locals.user.id 
+  res.locals.ssid = res.locals.user.id
   // console.log("this is our locals ssid: ", res.locals.ssid)
-  next();
+  return next();
 }
 // ----------------------------------------------------------------------------------------
 

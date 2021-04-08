@@ -148,7 +148,7 @@ productController.getCartUser = (req, res, next) => {
   models.Cart.find({userId: username})
   .then((cart) => {
     res.locals.cart = cart;
-    console.log('our user cart: ', res.locals.cart)
+    console.log('our user cart: ', res.locals.cart);
     next();
   })
   .catch((err) => ({
@@ -214,32 +214,5 @@ productController.addCart = async (req, res, next) => {
 
 
 
-// productController.addCart = (req, res, next) => {
-//   // console.log('these are our cookies: ', req.cookies)
-//   // console.log("passed down data: ", res.locals.product)
-//   const usernameId = req.cookies.ssid;
-//   models.Cart.find({userId: usernameId})
-//   .then((cart) => {
-//     console.log('our cart: ', cart)
-//      cart.products.push({
-//       Title: res.locals.product.Title,
-//       ImageURL: res.locals.product.ImageURL,
-//       productId: res.locals.product._id,
-//       quantity: 1,
-//       price: res.locals.product.Price
-//      })
-//     console.log('cart updated')
-//      next();
-//   })
-//   .then(() => {
-//     res.locals.cart = cart.save()
-//     console.log("this is our updated products cart: ", res.locals.cart)
-//     next();
-//   })
-//   .catch((err) => ({
-//     log: err,
-//     message: { err: 'productController.addCart failed'}
-//   }));
-// }
 
 module.exports = productController;

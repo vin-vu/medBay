@@ -45,6 +45,18 @@ router.post('/login', userController.login, userController.setSSIDCookie, produc
   res.status(200).json(res.locals);
 });
 
+//VERIFY IF USER IS LOGED IN 
+router.get('/isLoggedIn', userController.isLoggedIn, (req, res) => {
+  res.status(200).json(res.locals);
+});
+
+// DELETE COOKIES WHEN USER LOGSOUT
+router.get('/signout', (req, res) => {
+  res.clearCookie('ssid');
+  res.send('cookie ssid cleared');
+});
+
+
 // ADD NEW PRODUCTS
 router.post('/product', productController.addProducts, (req, res) => {
   res.status(200).json(res.locals);
