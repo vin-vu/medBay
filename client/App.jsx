@@ -30,7 +30,14 @@ const App = () => {
     listingsFromDb: [],
     listingsToRender: [],
     currentListings: 0,
-    addToCart: () => console.log('I\'ve been added to cart!!!'),
+    addToCart: () => {
+      fetch('/api/allProducts/')
+        .then((response) => response.json())
+        .then((response) => {
+          console.log(response[0])
+      })
+        .catch((err) => console.log(err));
+    }
   });
 
   // Modular loop function, takes two arguments, an array of objects and a callback
