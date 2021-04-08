@@ -26,6 +26,7 @@
     "bootstrap": "^4.6.0",
     "bootstrap-icons": "^1.4.1",
     "browserify": "^17.0.0",
+    "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
     "dotenv": "^8.2.0",
     "enzyme": "^3.11.0",
