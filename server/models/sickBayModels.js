@@ -60,9 +60,9 @@ const cartSchema = new Schema({
   products: [{
     Title: String,
     ImageURL: String,
-    productId: Number,
+    productId: String,
     quantity: Number,
-    price: Number
+    price: String
    }],
   // products: [
   //   {

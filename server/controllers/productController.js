@@ -144,7 +144,7 @@ productController.getCart = (req, res, next) => {
 // GETTING A PRODUCT FROM PRODUCT DATABASE
 // $push into cart schema
 productController.getCartProduct = (req, res, next) => {
-  // This is what the client should send: {id: 606d3ad382f8173e94b23732}
+  // This is what the client should send: {id: 606d3ad382f8173e94b23732, quantity: }
   const { id } = req.body
   console.log("this is our body: ", id)
   models.Product.findById(id)
@@ -167,26 +167,28 @@ productController.addCart = async (req, res, next) => {
   console.log("passed down data: ", res.locals.product)
   const usernameId = req.cookies.ssid;
   console.log("User Id: ",usernameId)
-  // try {
-  // let cart = await models.Cart.findOne({userId: usernameId})
-  // console.log('this is our cart:', cart)
-  // if(cart) {
-  //     cart.products.push({
-  //       Title: res.locals.product.Title,
-  //       ImageURL: res.locals.product.ImageURL,
-  //       productId: res.locals.product._id,
-  //       quantity: 1,
-  //       price: res.locals.product.Price
-  //     })
-  //     cart = await cart.save();
-  //     res.locals.cart = cart
-  //   }
-  //   console.log('this is the updated cart: ', res.locals.cart)
-  //   console.log('this is the updated cart 2: ', cart)
-  // }  catch (err) {
-  //   console.log(err);
-  //   res.status(500).send("Something went wrong");
-  // }
+
+  models.Cart.findOneAndUpdate(
+    {userId: usernameId},
+    {$push: {products:
+      {
+        Title: res.locals.product.Title,
+        ImageURL: res.locals.product.ImageURL,
+        productId: res.locals.product._id,
+        price: res.locals.product.Price,
+        quantity: 1,
+    
+    }
+  }})
+  .then((cart) => {
+    res.locals.cart = cart;
+    console.log('our cart: ', res.locals.cart)
+    next();
+  })
+  .catch((err) => ({
+    log: err,
+    message: { err: 'productController.getCart failed'}
+  }));
  
 }
 
