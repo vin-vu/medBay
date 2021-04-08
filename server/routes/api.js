@@ -33,6 +33,7 @@ router.get('/createCart', productController.createCart, (req,res) => {
 router.get('/getCartUser', productController.getCartUser, (req, res) => {
   res.status(200).json(res.locals);
 });
+
 // ADDING TO CART
 // FIND ITEM IN PRODUCT DATABASE
 router.post('/addCart', productController.getCartProduct, productController.addCart, (req, res) => {

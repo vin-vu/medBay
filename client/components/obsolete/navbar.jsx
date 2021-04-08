@@ -4,11 +4,11 @@ import {
   ButtonGroup, AppBar, Toolbar, Box, Slide, useScrollTrigger, makeStyles,
 } from '@material-ui/core/';
 // Local files imports
-import LogoName from './navbar/logoName';
-import BigSearch from './navbar/bigSearch';
-import Categories from './navbar/categories';
-import Login from './navbar/login';
-import Signup from './navbar/signup';
+import LogoName from './obsoleteNavBar/logoName';
+import BigSearch from './obsoleteNavBar/bigSearch';
+import Categories from './obsoleteNavBar/categories';
+import Login from './obsoleteNavBar/login';
+import Signup from './obsoleteNavBar/signup';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
