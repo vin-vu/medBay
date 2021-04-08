@@ -11,7 +11,12 @@ import {
   Popover,
   Box,
   TextField,
-  Divider
+  Divider,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogContentText,
+  DialogActions
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -103,6 +108,7 @@ const NavBar = (props) => {
   const [ isLoggedIn, setIsLoggedIn ] = useState(false);
   const [ LoggedInUser, setLoggedInUser ] = useState('');
 
+  // Upon initial component mount, check if user isLoggedIn
   useEffect(() => {
     fetch('/api/isLoggedIn')
       .then((res) => res.json())
@@ -129,35 +135,64 @@ const NavBar = (props) => {
   }
 
   // Condition Profile Popover Depending if User is Logged In
-  const LoggedInPopover = () => {
-    return (
-      <Box
-        className={classes.popover} 
-        display="flex" 
-        flexDirection="column"
-        justifyContent="space-between"
-        alignItems="center"
-      >
-        <Avatar />
-        <Typography 
-          variant="h5"
-          style={{marginTop: 18}}
+  // const LoggedInPopover = () => {
+  //   return (
+  //     <Box
+  //       className={classes.popover} 
+  //       display="flex" 
+  //       flexDirection="column"
+  //       justifyContent="space-between"
+  //       alignItems="center"
+  //     >
+  //       <Avatar />
+  //       <Typography 
+  //         variant="h5"
+  //         style={{marginTop: 18}}
+  //       >
+  //         Welcome, {LoggedInUser}
+  //       </Typography>
+  //       <Button 
+  //         variant="contained" 
+  //         color="secondary" 
+  //         style={{marginTop: 18}}
+  //         // onClick={(e) => console.log('signedout')}
+  //         onClick={(e) => handleSignoutButtonClick(e)}
+  //       >
+  //         Sign Out
+  //       </Button>
+  //     </Box>
+  //   )
+  // };
+
+  const ProfilePopover = (props) => {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return (
+        <Box
+          className={classes.popover} 
+          display="flex" 
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="center"
         >
-          Welcome, {LoggedInUser}
-        </Typography>
-        <Button 
-          variant="contained" 
-          color="secondary" 
-          style={{marginTop: 18}}
-          // onClick={(e) => console.log('signedout')}
-          onClick={(e) => handleSignoutButtonClick(e)}
-        >
-          Sign Out
-        </Button>
-      </Box>
-    )
-  };
-  const LoggedOutPopover = () => {
+          <Avatar />
+          <Typography 
+            variant="h5"
+            style={{marginTop: 18}}
+          >
+            Welcome, {LoggedInUser}
+          </Typography>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            style={{marginTop: 18}}
+            onClick={(e) => handleSignoutButtonClick(e)}
+          >
+            Sign Out
+          </Button>
+        </Box>
+      );
+    }
     return (
       <Box 
         className={classes.popover} 
@@ -197,80 +232,8 @@ const NavBar = (props) => {
           Signup
         </Button>
       </Box>
-    )
+    );
   }
-
-  // const ProfilePopover = (props) => {
-  //   const isLoggedIn = props.isLoggedIn;
-  //   if (isLoggedIn) {
-  //     return (
-  //       <Box
-  //         className={classes.popover} 
-  //         display="flex" 
-  //         flexDirection="column"
-  //         justifyContent="space-between"
-  //         alignItems="center"
-  //       >
-  //         <Avatar />
-  //         <Typography 
-  //           variant="h5"
-  //           style={{marginTop: 18}}
-  //         >
-  //           Welcome, {LoggedInUser}
-  //         </Typography>
-  //         <Button 
-  //           variant="contained" 
-  //           color="secondary" 
-  //           style={{marginTop: 18}}
-  //           // onClick={(e) => console.log('signedout')}
-  //           onClick={(e) => handleSignoutButtonClick(e)}
-  //         >
-  //           Sign Out
-  //         </Button>
-  //       </Box>
-  //     );
-  //   }
-  //   return (
-  //     <Box 
-  //       className={classes.popover} 
-  //       display="flex" 
-  //       flexDirection="column"
-  //     >
-  //       <Typography variant="h6" gutterBottom>Sign In</Typography>
-  //       <TextField
-  //         id="filled-username-input"
-  //         label="Username"
-  //         type="username"
-  //         autoComplete="current-username"
-  //         variant="filled"
-  //         onChange={(e) => handleUsernameChange(e)}
-  //       />
-  //       <TextField
-  //         id="filled-password-input"
-  //         label="Password"
-  //         type="password"
-  //         autoComplete="current-password"
-  //         variant="filled"
-  //         onChange={(e) => handlePasswordChange(e)}
-  //       />
-  //       <Divider />
-  //       <Button 
-  //         variant="contained" 
-  //         color="secondary" 
-  //         onClick={(e) => handleLoginButtonClick(e)}
-  //       >
-  //         Login
-  //       </Button>
-  //       <Button 
-  //         variant="contained" 
-  //         color="primary" 
-  //         onClick={(e) => handleSignupButtonClick(e)}
-  //       >
-  //         Signup
-  //       </Button>
-  //     </Box>
-  //   );
-  // }
 
   // Fetch Signout 
   const fetchSignout = () => {
@@ -296,9 +259,11 @@ const NavBar = (props) => {
 
   // Update Username / Password states on every keystroke
   const handleUsernameChange = (event) => {
+    setIsLoggedIn(false);
     setUsernameInput(event.target.value);
   }
   const handlePasswordChange = (event) => {
+    setIsLoggedIn(false);
     setPasswordInput(event.target.value);
   }
 
@@ -614,7 +579,8 @@ const NavBar = (props) => {
                 horizontal: 'center',
               }}
             >
-              { isLoggedIn ? <LoggedInPopover /> : <LoggedOutPopover /> }
+              {/* { isLoggedIn ? <LoggedInPopover /> : <LoggedOutPopover /> } */}
+              <ProfilePopover isLoggedIn={isLoggedIn} />
               <Box 
                 className={classes.popover} 
                 display="flex" 
