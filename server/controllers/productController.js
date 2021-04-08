@@ -176,7 +176,8 @@ productController.getCartProduct = (req, res, next) => {
 };
 
 
-
+// FIND THE CORRECT CART (CORRECT CART MEANS USER'S CART or TEMP CART)
+  // THEN PUSH ITEMS TO CART
 // Adding products to cart to existing user
 productController.addCart = async (req, res, next) => {
   // console.log('these are our cookies: ', req.cookies)
@@ -229,11 +230,29 @@ productController.addCart = async (req, res, next) => {
       message: { err: 'productController.getCart failed'}
     }));
   }
-
 }
-  // FIND THE CORRECT CART (CORRECT CART MEANS USER'S CART or TEMP CART)
-    // THEN PUSH ITEMS TO CART
 
+// CART CONTROLLER TO DELETE SELECTED USER ITEM ON USER CART
+productController.deleteUserProduct = (req, res, next) => {
+
+  const usernameId = req.cookies.ssid;
+  // This is what the client should send (productId): {id: 606d3ad382f8173e94b23732, quantity: }
+  const productId = req.body.id;
+  
+  models.Cart.updateOne(
+    {userId: usernameId},
+    { $pull: { products: { productId: productId } } }
+  )
+  .then((cart) => {
+    res.locals.cart = cart;
+    console.log('our cart: ', res.locals.cart)
+    next();
+  })
+  .catch((err) => ({
+    log: err,
+    message: { err: 'productController.getCart failed'}
+  }));
+}
 
 
 

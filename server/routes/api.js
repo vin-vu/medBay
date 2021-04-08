@@ -40,6 +40,11 @@ router.post('/addCart', productController.getCartProduct, productController.addC
   res.status(200).json(res.locals);
 });
 
+// DELETE PRODUCT FROM USER CART
+router.post('/deleteUserProduct', productController.deleteUserProduct, (req, res) => {
+  res.status(200).json(res.locals);
+});
+
 // VERIFY USER INFORMATION FROM DB // LOGIN
 router.post('/login', userController.login, userController.setSSIDCookie, productController.getCart, (req, res) => {
   res.status(200).json(res.locals);
