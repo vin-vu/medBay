@@ -69,6 +69,26 @@ const AddToCartButton = styled(Button)({
 const IndividualDisplay = (props) => {
   const classes = useStyles();
 
+  // postItem for AddToCart Button
+  const postItem = ( itemId ) => {
+    fetch('/api/addCart', { 
+      method: 'POST', 
+      body: JSON.stringify({ "id": itemId }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('product addCart successful: ', data);
+      })
+      .catch((err) => console.log('There was an issue adding to cart ', err));
+  } 
+
+  // Fetch on button click
+  const handleAddCartClick = (id) => {
+    return postItem(id);
+  }
+
+
   return (
     <Grid item xs={3}>
       <Card className={classes.card}>
@@ -100,7 +120,9 @@ const IndividualDisplay = (props) => {
             <ShareIcon />
           </IconButton>
           <IconButton aria-label="share">
-            <ShoppingCartIcon />
+            <ShoppingCartIcon 
+              onClick={() => handleAddCartClick(props.objectID)}
+            />
           </IconButton>
         </CardActions>
       </Card>

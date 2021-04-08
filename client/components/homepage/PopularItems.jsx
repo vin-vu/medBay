@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
   Box,
   Grid,
@@ -12,15 +12,38 @@ import {
 } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 
-
 import useStyles from './PopularItemsStyles';
+
+
+
+
+
 
 const PopularItems = () => {
   const classes = useStyles();
 
+  // postItem for AddToCart Button
+  const postItem = ( itemId ) => {
+    fetch('/api/addCart', { 
+      method: 'POST', 
+      body: JSON.stringify({ "id": itemId }),
+      headers: { 'Content-Type': 'application/json' }
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('product addCart successful: ', data);
+      })
+      .catch((err) => console.log('There was an issue adding to cart ', err));
+  } 
+
+  // Fetch on button click
+  const handleAddCartClick = (id) => {
+    return postItem(id);
+  }
+
   return (
     <div>
-      {/* -- POPULAR CATAGORIES SECTION ----------------------------------------- */}
+      {/* -- POPULAR ITEMS SECTION ----------------------------------------------- */}
       <Grid container spacing={3}>
         <Grid item xs={12} className={classes.popularItems}>
           <Typography variant="h5">
@@ -45,7 +68,11 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $15.99
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  // Title="606d3ad382f8173e94b23733" 
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b23733")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>
@@ -70,7 +97,10 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $7.99
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b23748")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>
@@ -95,7 +125,10 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $9.79
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b2373f")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>
@@ -120,7 +153,10 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $28.99
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b23737")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>
@@ -145,7 +181,10 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $9.99
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b23736")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>
@@ -170,7 +209,10 @@ const PopularItems = () => {
                 <Typography variant="subtitle1">
                   $22.95
                 </Typography>
-                <IconButton aria-label="share">
+                <IconButton 
+                  aria-label="share"
+                  onClick={() => handleAddCartClick("606d3ad382f8173e94b2374e")}
+                >
                   <ShoppingCartIcon />
                 </IconButton>
               </Box>

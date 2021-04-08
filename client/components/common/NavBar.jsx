@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import {
   AppBar,
+  Avatar,
   Toolbar,
   IconButton,
   Typography,
   InputBase,
   Badge,
-  Avatar,
   Button,
   Popover,
   Box,
@@ -19,6 +19,7 @@ import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PhoneIcon from '@material-ui/icons/Phone';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Link,
 } from "react-router-dom";
@@ -33,7 +34,7 @@ const NavBar = (props) => {
 
 
   // CATAGORIES POPOVER HANDLING --------------------------------------
-  const [catagoriesPopoverAnchorEl, setCatagoriesPopoverAnchorEl] = useState(null);
+  const [ catagoriesPopoverAnchorEl, setCatagoriesPopoverAnchorEl ] = useState(null);
 
   const handleCatagoriesPopoverClick = (event) => {
     setCatagoriesPopoverAnchorEl(event.currentTarget);
@@ -49,7 +50,7 @@ const NavBar = (props) => {
 
 
   // SHOPPING CART POPOVER HANDLING -----------------------------------
-  const [cartPopoverAnchorEl, setCartPopoverAnchorEl] = useState(null);
+  const [ cartPopoverAnchorEl, setCartPopoverAnchorEl ] = useState(null);
 
   const handleCartPopoverClick = (event) => {
     setCartPopoverAnchorEl(event.currentTarget);
@@ -65,15 +66,20 @@ const NavBar = (props) => {
   // ------------------------------------------------------------------
 
   // STATE MANAGEMENT FOR CART ----------------------------------------
+  const [ usersCart, setUsersCart ] = useState([]);
+
   const fetchCart = () => {
     fetch('/api/getCartUser')
       .then((res) => res.json())
       .then((data) => {
         console.log('Successfully retrieved user cart ', data);
         // Do stuff with cart data
+        setUsersCart(data.cart[0].products);
+        console.log('The users cart is: ', usersCart);
       })
       .catch((err) => console.log('Unsuccessful cart retrieval: ', err))
   }
+
   // ------------------------------------------------------------------
 
 
@@ -181,7 +187,7 @@ const NavBar = (props) => {
     fetch('/api/productSearch', fetchData)
       .then((res) => res.json())
       .then((data) => {
-        console.log("product search successed: ", data);
+        console.log("product search successful: ", data);
         return props.setState(data);
       })
       .catch((err) => console.log('There has been a problem with fetching items ', err));
@@ -203,10 +209,6 @@ const NavBar = (props) => {
   }
 
   // ------------------------------------------------------------------
-
-  
-
-
 
   
 
@@ -313,11 +315,11 @@ const NavBar = (props) => {
           {/* ---------------------------------------------------------- */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/products" style={{ textDecoration: 'none' }}>
+            <a href="https://bit.ly/31UNEiV" style={{ textDecoration: 'none' }}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <PhoneIcon />
               </IconButton>
-            </Link>
+            </a>
             {/* -- Shopping Cart Button -------------------------------- */}
             <IconButton 
               aria-label="show 17 new notifications" 
@@ -351,7 +353,43 @@ const NavBar = (props) => {
               >
                 <Typography variant="h6" gutterBottom>Shopping Cart</Typography>
                 <Divider />
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('Checkout Clicked!')}>
+                <div className={classes.cartDiv}>
+                  {
+                    usersCart
+                      .map((item, index) => (
+                        <Box 
+                          display="flex" 
+                          justifyContent="space-between" 
+                          alignItems="center"
+                          className={classes.cartContent}
+                        >
+                          <Box display="flex" justifyContent="flex-start" alignItems="center">
+                            <Avatar src={item.ImageURL} />
+                            <Box style={{paddingLeft: 16}}>
+                              <Typography variant="subtitle1" noWrap="true">
+                                {item.Title}
+                              </Typography>
+                              <Typography variant="subtitle2">
+                                ${item.price}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box>
+                            <IconButton>
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
+                        </Box>
+                      ))
+                  }
+                </div>
+                <Divider />
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  onClick={(e) => console.log('Checkout Clicked!')}
+                  style={{marginTop: 24}}
+                >
                   Checkout
                 </Button>
               </Box>
