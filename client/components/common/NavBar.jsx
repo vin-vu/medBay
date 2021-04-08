@@ -1,30 +1,32 @@
-import React, { useState } from 'react';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import InputBase from '@material-ui/core/InputBase';
-import Badge from '@material-ui/core/Badge';
+import React, { useState, useEffect } from 'react';
+import {
+  AppBar,
+  Toolbar,
+  IconButton,
+  Typography,
+  InputBase,
+  Badge,
+  Avatar,
+  Button,
+  Popover,
+  Box,
+  TextField,
+  Divider
+} from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
-import Avatar from '@material-ui/core/Avatar';
-import Button from '@material-ui/core/Button';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PhoneIcon from '@material-ui/icons/Phone';
-import Popover from '@material-ui/core/Popover';
-import Box from '@material-ui/core/Box';
-import TextField from '@material-ui/core/TextField';
-import Divider from '@material-ui/core/Divider';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
 import {
-  Link
+  Link,
 } from "react-router-dom";
 
 import useStyles from './NavBarStyles';
 
 
-const NavBar = () => {
+const NavBar = (props) => {
   // USESTYLES HOOK ---------------------------------------------------
   const classes = useStyles();
   // ------------------------------------------------------------------
@@ -76,13 +78,71 @@ const NavBar = () => {
   // ------------------------------------------------------------------
 
 
-  
+  // STATE MANAGEMENT FOR CATAGORIES BUTTONS --------------------------
+  const [categories, setCategories] = useState([]);
+
+  useEffect(() => {
+    fetch('/api/categoryList')
+      .then((res) => res.json())
+      .then((arrOfCategories) => setCategories(arrOfCategories))
+      .catch((err) => console.log('There has been a problem with fetching categories ', err));
+  }, []);
+
+  // fetch data based on category by attaching specific category as a query parameter to the end of URL
+  function getItemByButton(cat) {
+    console.log(cat);
+    fetch(`api/categoryProducts?Category=${cat}`)
+      .then((res) => res.json())
+      .then((items) => {
+        console.log(items);
+        return props.setState(items);
+      })
+      .catch((err) => console.log('There has been a problem with fetching categories: ', err));
+  }
+  // ------------------------------------------------------------------
+
+
+  // STATE MANAGEMENT FOR SEARCH BAR ----------------------------------
+  const [searchInput, setSearchInput] = useState('');
+
+  /*
+  Insert fetchData as a second parameter to the fetchItem function
+  use POST request to send keyword in the req.body to the server
+  */
+  const fetchData = {
+    method: 'POST',
+    body: JSON.stringify({ productName: searchInput }),
+    headers: { 'Content-Type': 'application/json' },
+  };
+
+  /* Fetch from server */
+  function fetchItem() {
+    fetch('/api/productSearch', fetchData)
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("product search successed: ", data);
+        return props.setState(data);
+      })
+      .catch((err) => console.log('There has been a problem with fetching items ', err));
+  }
+  /* Update state on every keystroke */
+  function handleChange(event) {
+    setSearchInput(event.target.value);
+  }
+  /* Fetch on pressing enter key */
+  function getItemByEnterKey(event) {
+    if (event.key === 'Enter') return fetchItem();
+  }
+
+  // ------------------------------------------------------------------
+
+
   return (
     <div className={classes.grow}>
       <AppBar position="fixed">
         <Toolbar className={classes.toolbar}>
           {/* -- LogoButton & Logo Text -------------------------------- */}
-          <Link to="/">
+          <Link to="/" style={{textDecoration: 'none'}}>
             <IconButton
               edge="start"
               className={classes.menuButton}
@@ -94,7 +154,7 @@ const NavBar = () => {
               </Avatar>
             </IconButton>
           </Link>
-            <Typography className={classes.title} variant="h6" noWrap>
+            <Typography className={classes.title} variant="h5" noWrap>
               medBay
             </Typography>
           {/* ---------------------------------------------------------- */}
@@ -130,15 +190,23 @@ const NavBar = () => {
               >
                 <Typography variant="h6" gutterBottom>Catagories</Typography>
                 <Divider />
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('FAK Clicked!')}>
-                  FAK
-                </Button>
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('MS Clicked!')}>
-                  MS
-                </Button>
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('PPE Clicked!')}>
-                  PPE
-                </Button>
+                {/* CATAGORIES BUTTONS ---------------------------------------------- */}
+                <Link to="/products" style={{textDecoration: 'none'}}>
+                  {
+                    categories
+                      .map((category, index) => (
+                        <Button 
+                          color="secondary" 
+                          variant="contained" 
+                          id={category} 
+                          key={index} 
+                          onClick={() => getItemByButton(category)}
+                        >
+                          {category}
+                        </Button>
+                      ))
+                  }
+                </Link>
               </Box>
             </Popover>
           {/* ---------------------------------------------------------- */}
@@ -154,15 +222,23 @@ const NavBar = () => {
                 input: classes.inputInput,
               }}
               inputProps={{ 'aria-label': 'search' }}
+              onChange={(e) => handleChange(e)}
+              onKeyDown={(e) => getItemByEnterKey(e)}
+              // inputRef={ref => { this.inputRef = ref; }}
             />
-            <Button variant="contained" color="secondary" className={classes.searchButton}>
+            <Button 
+              variant="contained" 
+              color="secondary" 
+              className={classes.searchButton}
+              // onClick={(e) => getItemByEnterKey(this.inputRef.value)}
+            >
               <SearchIcon />
             </Button>
           </div>
           {/* ---------------------------------------------------------- */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/products">
+            <Link to="/products" style={{ textDecoration: 'none' }}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <PhoneIcon />
               </IconButton>

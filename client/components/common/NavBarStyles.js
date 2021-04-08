@@ -8,7 +8,7 @@ export default makeStyles((theme) => ({
     backgroundColor: '#03a9f4',
   },
   menuButton: {
-    marginRight: theme.spacing(2),
+    marginRight: theme.spacing(0),
   },
   title: {
     display: 'none',

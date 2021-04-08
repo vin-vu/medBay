@@ -1,21 +1,20 @@
 import React, { useState, useEffect } from 'react';
 import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { purple, orange, lightBlue } from '@material-ui/core/colors';
 import CssBaseline from "@material-ui/core/CssBaseline";
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
-
 import Navbar from './components/navbar';
+
+import NavBar from './components/common/NavBar';
+import HomePage from './components/HomePage';
+
 import MainBody from './components/mainBody';
 import IndividualDisplay from './components/body/individualDisplay';
-import NavBar from './components/common/NavBar';
 
-import HomePage from './components/HomePage';
 
 const theme = createMuiTheme({
   palette: {
@@ -49,6 +48,7 @@ const App = () => {
     // increment the currentNumber by 1
     for (const element of listingArray) {
       renderListings.push(<IndividualDisplay
+        objectID={element._id}
         title={element.Title}
         description={element.Description}
         category={element.Category}
@@ -102,10 +102,9 @@ const App = () => {
     <Router>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <NavBar />
+        <NavBar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} />
         {/* <Navbar setState={(newState) => setItemList({ ...itemList, listingsFromDb: newState })} /> */}
         <div style={{ height: '100px' }} />
-        
         <Switch>
           <Route path="/products">
             <MainBody items={itemList.listingsToRender} />
