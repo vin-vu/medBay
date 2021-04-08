@@ -26,19 +26,23 @@ router.get('/categoryProducts', productController.categoryProducts, (req, res) =
 
 // CREATE EMPTY CARD WHEN USER SIGNSUP/LOGSIN
 router.get('/createCart', productController.createCart, (req,res) => {
-  res.status(200).json(res.locals)
-})
+  res.status(200).json(res.locals);
+});
 
+// CREATE ROUTE TO SENT USER CART TO FRONTEND
+router.get('/getCartUser', productController.getCartUser, (req, res) => {
+  res.status(200).json(res.locals);
+});
 // ADDING TO CART
 // FIND ITEM IN PRODUCT DATABASE
 router.post('/addCart', productController.getCartProduct, productController.addCart, (req, res) => {
   res.status(200).json(res.locals);
-})
+});
 
 // VERIFY USER INFORMATION FROM DB // LOGIN
 router.post('/login', userController.login, userController.setSSIDCookie, productController.getCart, (req, res) => {
   res.status(200).json(res.locals);
-})
+});
 
 // ADD NEW PRODUCTS
 router.post('/product', productController.addProducts, (req, res) => {
