@@ -1,17 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   AppBar,
+  Avatar,
   Toolbar,
   IconButton,
   Typography,
   InputBase,
   Badge,
-  Avatar,
   Button,
   Popover,
   Box,
   TextField,
-  Divider
+  Divider,
 } from '@material-ui/core';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -19,6 +19,7 @@ import LocalHospitalIcon from '@material-ui/icons/LocalHospital';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
 import PhoneIcon from '@material-ui/icons/Phone';
 import ViewModuleIcon from '@material-ui/icons/ViewModule';
+import DeleteIcon from '@material-ui/icons/Delete';
 import {
   Link,
 } from "react-router-dom";
@@ -33,7 +34,7 @@ const NavBar = (props) => {
 
 
   // CATAGORIES POPOVER HANDLING --------------------------------------
-  const [catagoriesPopoverAnchorEl, setCatagoriesPopoverAnchorEl] = useState(null);
+  const [ catagoriesPopoverAnchorEl, setCatagoriesPopoverAnchorEl ] = useState(null);
 
   const handleCatagoriesPopoverClick = (event) => {
     setCatagoriesPopoverAnchorEl(event.currentTarget);
@@ -49,7 +50,7 @@ const NavBar = (props) => {
 
 
   // SHOPPING CART POPOVER HANDLING -----------------------------------
-  const [cartPopoverAnchorEl, setCartPopoverAnchorEl] = useState(null);
+  const [ cartPopoverAnchorEl, setCartPopoverAnchorEl ] = useState(null);
 
   const handleCartPopoverClick = (event) => {
     setCartPopoverAnchorEl(event.currentTarget);
@@ -65,15 +66,34 @@ const NavBar = (props) => {
   // ------------------------------------------------------------------
 
   // STATE MANAGEMENT FOR CART ----------------------------------------
+  const [ usersCart, setUsersCart ] = useState([]);
+
   const fetchCart = () => {
     fetch('/api/getCartUser')
       .then((res) => res.json())
       .then((data) => {
-        console.log('Successfully retrieved user cart ', data);
+        // console.log('Successfully retrieved user cart ', data);
         // Do stuff with cart data
+        setUsersCart(data.cart[0].products);
+        console.log('The users cart is: ', usersCart);
       })
       .catch((err) => console.log('Unsuccessful cart retrieval: ', err))
   }
+
+  const handleDeleteItemClick = (event, itemId) => {
+    fetch('/api/deleteUserProduct', {
+      method: 'POST',
+      body: JSON.stringify({ id: itemId }),
+      headers: { 'Content-Type': 'application/json' },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('The cart data.cart after deleting is: ', data.cart);
+        // setUsersCart(data);
+      })
+      .catch((err) => console.log('Unsuccessful delete error: ', err));
+  };
+
   // ------------------------------------------------------------------
 
 
@@ -94,45 +114,161 @@ const NavBar = (props) => {
   // ------------------------------------------------------------------
 
   // STATE MANAGEMENT FOR LOGIN / SIGNIN ------------------------------
-  const [ usernameInput, setUsernameInput ] = useState('');
-  const [ passwordInput, setPasswordInput ] = useState('');
+  const [ isLoggedIn, setIsLoggedIn ] = useState(false);
+  const [ LoggedInUser, setLoggedInUser ] = useState('');
 
-  // Update Username / Password states on every keystroke
-  const handleUsernameChange = (event) => {
-    setUsernameInput(event.target.value);
-  }
-  const handlePasswordChange = (event) => {
-    setPasswordInput(event.target.value);
+  // Upon initial component mount, check if user isLoggedIn
+  useEffect(() => {
+    fetch('/api/isLoggedIn')
+      .then((res) => res.json())
+      .then((data) => {
+        console.log('The logged in username is: ', data.username)
+        if (data.username === null) setIsLoggedIn(false);
+        else setIsLoggedIn(true);
+        setLoggedInUser(data.username);
+      })
+      .catch((err) => console.log('Issue with isLoggedIn ', err));
+  }, []);
+
+  // Conditional Greeting Depending if User is Logged In
+  const Greeting = (props) => {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return (
+        <Button variant="outlined" style={{color: 'black', border: 'solid 2px black', marginRight: 20}} disabled>
+          {LoggedInUser}
+        </Button>
+      );
+    }
+    return (<div></div>);
   }
 
-  // Insert loginData as post request
-  const loginData = {
-    method: 'POST',
-    body: JSON.stringify({ username: usernameInput, password: passwordInput }),
-    headers: { 'Content-Type': 'application/json' },
+  const usernameRef = useRef(null);
+  const passwordRef = useRef(null);
+
+  const ProfilePopover = (props) => {
+    const isLoggedIn = props.isLoggedIn;
+    if (isLoggedIn) {
+      return (
+        <Box
+          className={classes.popover} 
+          display="flex" 
+          flexDirection="column"
+          justifyContent="space-between"
+          alignItems="center"
+        >
+          <Avatar />
+          <Typography 
+            variant="h5"
+            style={{marginTop: 18}}
+          >
+            Welcome, {LoggedInUser}
+          </Typography>
+          <Button 
+            variant="contained" 
+            color="secondary" 
+            style={{marginTop: 18}}
+            onClick={(e) => handleSignoutButtonClick(e)}
+          >
+            Sign Out
+          </Button>
+        </Box>
+      );
+    }
+    return (
+      <Box 
+        className={classes.popover} 
+        display="flex" 
+        flexDirection="column"
+      >
+        <Typography variant="h6" gutterBottom>Sign In</Typography>
+        <TextField
+          id="filled-username-input1"
+          label="Username"
+          type="username"
+          autoComplete="current-username"
+          variant="filled"
+          inputRef={usernameRef}
+        />
+        <TextField
+          id="filled-password-input1"
+          label="Password"
+          type="password"
+          autoComplete="current-password"
+          variant="filled"
+          inputRef={passwordRef}
+        />
+        <Divider />
+        <Button 
+          variant="contained" 
+          color="secondary" 
+          onClick={(e) => {
+            handleLoginButtonClick(e, usernameRef.current.value, passwordRef.current.value);
+          }}
+        >
+          Login
+        </Button>
+        <Button 
+          variant="contained" 
+          color="primary" 
+          onClick={(e) => {
+            handleSignupButtonClick(e, usernameRef.current.value, passwordRef.current.value)
+          }}
+        >
+          Signup
+        </Button>
+      </Box>
+    );
+  }
+
+  // Fetch Signout 
+  const fetchSignout = () => {
+    fetch('/api/signout')
+      .then((res) => res.json())
+      .then((data) => {
+        setIsLoggedIn(false);
+        setLoggedInUser('');
+      })
+      .catch((err) => console.log('Issue with signout endpoint ', err));
+  }
+
+  // Handling Signout Button Click
+  const handleSignoutButtonClick = (event) => {
+    setIsLoggedIn(false);
+    setLoggedInUser('');
+    return fetchSignout();
   }
 
   // Fetch from server
-  const fetchLogin = (buttonType) => {
+  const fetchLogin = (buttonType, userInput, pwInput) => {
     const loginUrl = '/api/' + buttonType;
-    // fetch('/api/login', loginData)
-    fetch(loginUrl, loginData)
+    fetch(loginUrl, {
+      method: 'POST',
+      body: JSON.stringify({ username: userInput, password: pwInput }),
+      headers: { 'Content-Type': 'application/json' },
+    })
       .then((res) => res.json())
       .then((data) => {
         console.log('Logged In / Sign Up Successful: ', data);
         // Do stuff with user logged in data
+        // setIsLoggedIn(true);
+        // setLoggedInUser(data.user.username);
       })
       .catch((err) => console.log('Unsuccessful login error: ', err));
   }
 
   // Handle Login Button Click
-  const handleLoginButtonClick = (event) => {
-    return fetchLogin('login');
+  const handleLoginButtonClick = (event, username, password) => {
+    setIsLoggedIn(true);
+    setLoggedInUser(username);
+    return fetchLogin('login', username, password);
   }
 
   // Handle Sign Up Button 
-  const handleSignupButtonClick = (event) => {
-    return fetchLogin('signup');
+  const handleSignupButtonClick = (event, username, password) => {
+    setIsLoggedIn(true);
+    setLoggedInUser(username);
+    return fetchLogin('signup', username, password);
   }
 
   // ------------------------------------------------------------------
@@ -143,6 +279,7 @@ const NavBar = (props) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    fetchCart();
     fetch('/api/categoryList')
       .then((res) => res.json())
       .then((arrOfCategories) => setCategories(arrOfCategories))
@@ -150,8 +287,7 @@ const NavBar = (props) => {
   }, []);
 
   // fetch data based on category by attaching specific category as a query parameter to the end of URL
-  function getItemByButton(cat) {
-    console.log(cat);
+  const getItemByButton = (cat) => {
     fetch(`api/categoryProducts?Category=${cat}`)
       .then((res) => res.json())
       .then((items) => {
@@ -181,7 +317,7 @@ const NavBar = (props) => {
     fetch('/api/productSearch', fetchData)
       .then((res) => res.json())
       .then((data) => {
-        console.log("product search successed: ", data);
+        console.log("product search successful: ", data);
         return props.setState(data);
       })
       .catch((err) => console.log('There has been a problem with fetching items ', err));
@@ -205,11 +341,6 @@ const NavBar = (props) => {
   // ------------------------------------------------------------------
 
   
-
-
-
-  
-
 
   return (
     <div className={classes.grow}>
@@ -286,9 +417,6 @@ const NavBar = (props) => {
           {/* ---------------------------------------------------------- */}
           {/* -- Search Bar -------------------------------------------- */}
           <div className={classes.search}>
-            {/* <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div> */}
             <InputBase
               placeholder="Search…"
               classes={{
@@ -313,11 +441,12 @@ const NavBar = (props) => {
           {/* ---------------------------------------------------------- */}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/products" style={{ textDecoration: 'none' }}>
+            <Greeting isLoggedIn={isLoggedIn} />
+            <a href="https://bit.ly/31UNEiV" style={{ textDecoration: 'none' }}>
               <IconButton aria-label="show 4 new mails" color="inherit">
                 <PhoneIcon />
               </IconButton>
-            </Link>
+            </a>
             {/* -- Shopping Cart Button -------------------------------- */}
             <IconButton 
               aria-label="show 17 new notifications" 
@@ -326,7 +455,7 @@ const NavBar = (props) => {
               onClick={handleCartPopoverClick}
               color="inherit"
               >
-              <Badge badgeContent={3} color="secondary">
+              <Badge badgeContent={usersCart.length} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -351,7 +480,51 @@ const NavBar = (props) => {
               >
                 <Typography variant="h6" gutterBottom>Shopping Cart</Typography>
                 <Divider />
-                <Button variant="contained" color="secondary" onClick={(e) => console.log('Checkout Clicked!')}>
+                <div className={classes.cartDiv}>
+                  {
+                    usersCart
+                      .map((item, index) => (
+                        <Box 
+                          display="flex" 
+                          justifyContent="space-between" 
+                          alignItems="center"
+                          className={classes.cartContent}
+                        >
+                          <Box display="flex" justifyContent="flex-start" alignItems="center">
+                            <Avatar src={item.ImageURL} />
+                            <Box style={{paddingLeft: 16}}>
+                              <Typography variant="subtitle1" noWrap="true">
+                                {item.Title}
+                              </Typography>
+                              <Typography variant="subtitle2">
+                                ${item.price}
+                              </Typography>
+                              <Typography variant="subtitle2">
+                                Quantity: {item.quantity}
+                              </Typography>
+                            </Box>
+                          </Box>
+                          <Box>
+                            <IconButton
+                              onClick={(e) => {
+                                handleDeleteItemClick(e, item.productId);
+                                fetchCart();
+                              }}
+                            >
+                              <DeleteIcon />
+                            </IconButton>
+                          </Box>
+                        </Box>
+                      ))
+                  }
+                </div>
+                <Divider />
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  onClick={(e) => console.log('Checkout Clicked!')}
+                  style={{marginTop: 24}}
+                >
                   Checkout
                 </Button>
               </Box>
@@ -382,44 +555,7 @@ const NavBar = (props) => {
                 horizontal: 'center',
               }}
             >
-              <Box 
-                className={classes.popover} 
-                display="flex" 
-                flexDirection="column"
-              >
-                <Typography variant="h6" gutterBottom>Sign In</Typography>
-                <TextField
-                  id="filled-username-input"
-                  label="Username"
-                  type="username"
-                  autoComplete="current-username"
-                  variant="filled"
-                  onChange={(e) => handleUsernameChange(e)}
-                />
-                <TextField
-                  id="filled-password-input"
-                  label="Password"
-                  type="password"
-                  autoComplete="current-password"
-                  variant="filled"
-                  onChange={(e) => handlePasswordChange(e)}
-                />
-                <Divider />
-                <Button 
-                  variant="contained" 
-                  color="secondary" 
-                  onClick={(e) => handleLoginButtonClick(e)}
-                >
-                  Login
-                </Button>
-                <Button 
-                  variant="contained" 
-                  color="primary" 
-                  onClick={(e) => handleSignupButtonClick(e)}
-                >
-                  Signup
-                </Button>
-              </Box>
+              <ProfilePopover isLoggedIn={isLoggedIn} />
             </Popover>
             {/* ---------------------------------------------------------- */}
           </div>

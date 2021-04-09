@@ -5,6 +5,9 @@ import {
     Paper,
     Button,
 } from '@material-ui/core'
+import {
+  Link,
+} from "react-router-dom";
 
 import useStyles from './SecondaryBannerStyles';
 
@@ -21,10 +24,11 @@ function Project(props) {
       >
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
-
-        <Button className={classes.checkButton}>
-            Check it out!
-        </Button>
+        <Link to="/products" style={{textDecoration: 'none'}}>
+          <Button className={classes.checkButton}>
+              Check it out!
+          </Button>
+        </Link>
       </Paper>
     )
 }

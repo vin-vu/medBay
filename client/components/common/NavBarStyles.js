@@ -82,4 +82,12 @@ export default makeStyles((theme) => ({
   popover: {
     padding: theme.spacing(3),
   },
+  cartDiv:{
+    padding: theme.spacing(2),
+    backgroundColor: theme.palette.background.default,
+  },
+  cartContent: {
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.default,
+  },
 }));
