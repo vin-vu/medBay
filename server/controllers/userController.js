@@ -5,7 +5,9 @@ const userController = {};
 
 // ADD USER TO DATABASE
 userController.addUser = (req, res, next) => {
+  // Using destructuring, create const Username and Password with the values from req.body
   const { username, password } = req.body;
+  // Create a const named salt assigned the value of the bcrypt.genSaltSync with a salt of 10
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(password, salt);
 
@@ -40,6 +42,7 @@ userController.login = (req, res, next) => {
   });
 }
 
+// CHECK IF USER IS ALREADY LOGED-IN
 userController.isLoggedIn = (req, res, next) => {
   
   if (!req.cookies.ssid) {
@@ -65,7 +68,6 @@ userController.setSSIDCookie = (req, res, next) => {
   // console.log("this is our locals ssid: ", res.locals.ssid)
   return next();
 }
-// ----------------------------------------------------------------------------------------
 
 
 
