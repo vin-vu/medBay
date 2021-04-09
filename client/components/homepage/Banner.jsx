@@ -1,7 +1,9 @@
 import React from 'react';
 import Carousel from "react-material-ui-carousel";
 import autoBind from "auto-bind";
-// import './BannerStyles.scss';
+import {
+  Link,
+} from "react-router-dom";
 
 import useStyles from './BannerStyles';
 
@@ -17,6 +19,17 @@ import {
 
 function Banner(props) {
   const classes = useStyles(); 
+
+  const getItemByButton = (cat) => {
+    fetch(`api/categoryProducts?Category=${cat}`)
+      .then((res) => res.json())
+      .then((items) => {
+        // console.log(items);
+        // return props.setState(items);
+      })
+      .catch((err) => console.log('There has been a problem with fetching categories: ', err));
+  }
+
 
   if (props.newProp) console.log(props.newProp)
   const contentPosition = props.contentPosition ? props.contentPosition : "left"
@@ -34,10 +47,14 @@ function Banner(props) {
         <Typography className={classes.caption}>
             {props.item.Caption}
         </Typography>
-
-        <Button variant="contained" className={classes.viewButton}>
-            View Now
-        </Button>
+        <Link to="/products" style={{textDecoration: 'none'}}>
+          <Button 
+            variant="contained" 
+            className={classes.viewButton}
+          >
+              View Now
+          </Button>
+        </Link>
       </CardContent>
     </Grid>
   )
@@ -201,11 +218,6 @@ class BannerExample extends React.Component {
           next={(now, previous) => console.log(`Next User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
           prev={(now, previous) => console.log(`Prev User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
           onChange={(now, previous) => console.log(`OnChange User Callback: Now displaying child${now}. Previously displayed child${previous}`)}
-          // fullHeightHover={false}
-          // navButtonsProps={{style: {backgroundColor: 'cornflowerblue', borderRadius: 0}}}
-          // navButtonsWrapperProps={{style: {bottom: '0', top: 'unset', }}}
-          // indicatorContainerProps={{style: {margin: "20px"}}}
-          // NextIcon='next'
         >
           {
             items.map((item, index) => {

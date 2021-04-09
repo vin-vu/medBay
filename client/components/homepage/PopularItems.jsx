@@ -11,6 +11,10 @@ import {
   IconButton
 } from '@material-ui/core';
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCart';
+import {
+  Link,
+} from "react-router-dom";
+
 
 import useStyles from './PopularItemsStyles';
 
@@ -56,13 +60,15 @@ const PopularItems = () => {
               title="Breathable Bandana With PM2.5 Filters"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://fetchppe.online/u_file/2004/products/30/e733989eff.jpg.640x640.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://fetchppe.online/u_file/2004/products/30/e733989eff.jpg.640x640.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">
@@ -85,13 +91,15 @@ const PopularItems = () => {
               title="Pen Light and Medical Scissors"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://images-na.ssl-images-amazon.com/images/I/61LKpAFehVL._AC_SX679_.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://images-na.ssl-images-amazon.com/images/I/61LKpAFehVL._AC_SX679_.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">
@@ -113,13 +121,15 @@ const PopularItems = () => {
               title="First Aid Kit Pouch (64-Piece)"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://images-na.ssl-images-amazon.com/images/I/91jcqbWBurL._AC_SX679_.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://images-na.ssl-images-amazon.com/images/I/91jcqbWBurL._AC_SX679_.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">
@@ -141,13 +151,15 @@ const PopularItems = () => {
               title="Disposable Isolation Protective Gowns"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://fetchppe.online/u_file/2004/products/15/5ede69b69e.jpg.640x640.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://fetchppe.online/u_file/2004/products/15/5ede69b69e.jpg.640x640.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">
@@ -169,13 +181,15 @@ const PopularItems = () => {
               title="Adjustable Strap Protective Glasses"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://fetchppe.online/u_file/2005/products/13/99dff1665f.jpg.640x640.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://fetchppe.online/u_file/2005/products/13/99dff1665f.jpg.640x640.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">
@@ -197,13 +211,15 @@ const PopularItems = () => {
               title="Medical Organizer Belt for Nurses"
               className={classes.popularCardHeader}
             />
-            <CardActionArea>
-              <CardMedia 
-                className={classes.popularItemsCard}
-                image="https://images-na.ssl-images-amazon.com/images/I/71g%2BOu0yW5L._AC_SX679_.jpg"
-                title="Contemplative Reptile"
-              />
-            </CardActionArea>
+            <Link to="/products" style={{textDecoration: 'none'}}>
+              <CardActionArea>
+                <CardMedia 
+                  className={classes.popularItemsCard}
+                  image="https://images-na.ssl-images-amazon.com/images/I/71g%2BOu0yW5L._AC_SX679_.jpg"
+                  title="Contemplative Reptile"
+                />
+              </CardActionArea>
+            </Link>
             <CardContent className={classes.popularCardContent}>
               <Box display="flex" justifyContent="space-between" alignItems="center">
                 <Typography variant="subtitle1">

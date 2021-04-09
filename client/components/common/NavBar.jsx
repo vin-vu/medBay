@@ -251,19 +251,23 @@ const NavBar = (props) => {
       .then((data) => {
         console.log('Logged In / Sign Up Successful: ', data);
         // Do stuff with user logged in data
-        setIsLoggedIn(true);
-        setLoggedInUser(data.user.username);
+        // setIsLoggedIn(true);
+        // setLoggedInUser(data.user.username);
       })
       .catch((err) => console.log('Unsuccessful login error: ', err));
   }
 
   // Handle Login Button Click
   const handleLoginButtonClick = (event, username, password) => {
+    setIsLoggedIn(true);
+    setLoggedInUser(username);
     return fetchLogin('login', username, password);
   }
 
   // Handle Sign Up Button 
   const handleSignupButtonClick = (event, username, password) => {
+    setIsLoggedIn(true);
+    setLoggedInUser(username);
     return fetchLogin('signup', username, password);
   }
 
@@ -275,6 +279,7 @@ const NavBar = (props) => {
   const [categories, setCategories] = useState([]);
 
   useEffect(() => {
+    fetchCart();
     fetch('/api/categoryList')
       .then((res) => res.json())
       .then((arrOfCategories) => setCategories(arrOfCategories))
@@ -283,7 +288,6 @@ const NavBar = (props) => {
 
   // fetch data based on category by attaching specific category as a query parameter to the end of URL
   const getItemByButton = (cat) => {
-    console.log(cat);
     fetch(`api/categoryProducts?Category=${cat}`)
       .then((res) => res.json())
       .then((items) => {
@@ -337,7 +341,6 @@ const NavBar = (props) => {
   // ------------------------------------------------------------------
 
   
-
 
   return (
     <div className={classes.grow}>
@@ -414,9 +417,6 @@ const NavBar = (props) => {
           {/* ---------------------------------------------------------- */}
           {/* -- Search Bar -------------------------------------------- */}
           <div className={classes.search}>
-            {/* <div className={classes.searchIcon}>
-              <SearchIcon />
-            </div> */}
             <InputBase
               placeholder="Search…"
               classes={{
@@ -455,7 +455,7 @@ const NavBar = (props) => {
               onClick={handleCartPopoverClick}
               color="inherit"
               >
-              <Badge badgeContent={3} color="secondary">
+              <Badge badgeContent={usersCart.length} color="secondary">
                 <ShoppingCartIcon />
               </Badge>
             </IconButton>
@@ -498,6 +498,9 @@ const NavBar = (props) => {
                               </Typography>
                               <Typography variant="subtitle2">
                                 ${item.price}
+                              </Typography>
+                              <Typography variant="subtitle2">
+                                Quantity: {item.quantity}
                               </Typography>
                             </Box>
                           </Box>
