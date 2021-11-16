@@ -14,7 +14,7 @@ Users will be able to create a secure account to shop for items such as First Ai
 - [Material UI](https://mui.com/) - React UI Library
 - [Node.js](https://nodejs.org/en/) - JS runtime
 - [MongoDB](https://www.google.com/search?q=mongodb&rlz=1C1CHBF_enUS894US894&oq=mongodb&aqs=chrome.0.0i10i433i512j0i10i67j0i67j0i10i512l3j0i433i512j0i10i512l3.1368j0j7&sourceid=chrome&ie=UTF-8) - Nonrelational database
-- [bcrypt](https://www.npmjs.com/package/bcrypt) - Password hasing
+- [bcrypt](https://www.npmjs.com/package/bcrypt) - Password hashing
 - SuperTest, Enzyme, Jest - Testing suite
 - HTML/CSS
 - More to be added
